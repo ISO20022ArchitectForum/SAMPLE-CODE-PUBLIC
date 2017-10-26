@@ -79,9 +79,8 @@ public class ISO20022CordAppGenerator {
 	final boolean useXMLSchemaNames;
 	
 	/**
-	 * Because ISO 20022 components and Components and DataTypes are re-used, we use this HashMap to keep track of
-	 * our classes as we create them. Avoids overhead of creating duplicates and allows them to be easily found 
-	 * on demand by fully qualified class name.
+	 * Because ISO 20022 Components and DataTypes are re-used, we use this HashMap to keep track of our classes as we create 
+	 * them. Avoids overhead of creating duplicates and allows them to be easily found on demand by fully qualified class name.
 	 */
 	HashMap<String, FieldHolderSource<?>>allClassesByQualifiedName = new HashMap<String, FieldHolderSource<?>>();
 	String packageRoot;
@@ -212,42 +211,6 @@ public class ISO20022CordAppGenerator {
 		return packageRoot + ".FIXME";
 	}
 
-	private TreeMap<String, Class<?>> getEncapsulatedData(DataType dt) {
-		TreeMap<String, Class<?>> data = new TreeMap<String, Class<?>>();
-		if (dt instanceof Duration) {
-			data.put("startValue", XMLGregorianCalendar.class);
-			data.put("endValue", XMLGregorianCalendar.class);
-		} else if (dt instanceof AbstractDateTimeConcept) {
-			data.put("value", XMLGregorianCalendar.class);
-		} 
-		if (dt instanceof iso20022.Boolean) {
-			data.put("value", java.lang.Boolean.class);
-		} 
-		if (dt instanceof iso20022.String) {
-			data.put("value", java.lang.String.class);
-		} 
-		if (dt instanceof Decimal) {
-			data.put("value", BigDecimal.class);
-		} 
-		if (dt instanceof Binary) {
-			data.put("value", String.class);
-		} 
-		if (dt instanceof SchemaType) {
-			data.put("value", ((SchemaType)dt).getKind().getClass());
-		} 
-		if (data.isEmpty()) {
-			System.err.println("Wasn't expecting to be asked to getEncapsulatedDataType() for this DataType: " + dt);
-		}
-		
-		return data;
-	}
-	
-	private String getDataTypeClassification(DataType rc) {
-		String classification = EMFHelper.getSimplifiedClassName(rc);
-		if (classification.contains("Time") || classification.contains("Date") || classification.contains("Year") || classification.contains("Day")) return "DateTime";
-		return classification;
-	}
-
 	private JavaClassSource createClass(RepositoryConcept rc) {
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
 		String className = rc.getName();
@@ -350,8 +313,6 @@ public class ISO20022CordAppGenerator {
 		TreeMap<String, Construct> myProperties = getProperties(bc);
 		for (Construct c : allProperties.values()) {
 			String propertyType = "FIXME";
-			String def = "";
-			String name = "";
 			RepositoryType t = c.getMemberType();
 			propertyType = t.getName();
 			if (t instanceof DataType) {
@@ -477,7 +438,7 @@ public class ISO20022CordAppGenerator {
 	
 	/**
 	 * 
-	 * @param rc An ISO 20022 Repository Concept (e.g. BusinessComponent or MessageComponent) 
+	 * @param rc An ISO 20022 Repository Concept (e.g. BusinessComponent, MessageDefinition, or MessageComponent) 
 	 * that contains properties (e.g. BusinessElements or MessageElements
 	 *  
 	 * @return an ordered map of these elements that will become class parameters
@@ -512,6 +473,50 @@ public class ISO20022CordAppGenerator {
 		return returnValue;
 	}
 	
+	/**
+	 * 
+	 * Becuase ISO 20022 DataTypes are defined logically, independently of any particular implementation technology
+	 * we must explicitly tell the generator what Java type is actually represented by each ISO 20022 type.
+	 * 
+	 * @param dt The ISO 20022 DataType that we're generating
+	 * @return an ordered list of names and classes that tell us what Java type/s this DataType encapsulates
+	 */
+	private TreeMap<String, Class<?>> getEncapsulatedData(DataType dt) {
+		TreeMap<String, Class<?>> data = new TreeMap<String, Class<?>>();
+		if (dt instanceof Duration) {
+			data.put("startValue", XMLGregorianCalendar.class);
+			data.put("endValue", XMLGregorianCalendar.class);
+		} else if (dt instanceof AbstractDateTimeConcept) {
+			data.put("value", XMLGregorianCalendar.class);
+		} 
+		if (dt instanceof iso20022.Boolean) {
+			data.put("value", java.lang.Boolean.class);
+		} 
+		if (dt instanceof iso20022.String) {
+			data.put("value", java.lang.String.class);
+		} 
+		if (dt instanceof Decimal) {
+			data.put("value", BigDecimal.class);
+		} 
+		if (dt instanceof Binary) {
+			data.put("value", String.class);
+		} 
+		if (dt instanceof SchemaType) {
+			data.put("value", ((SchemaType)dt).getKind().getClass());
+		} 
+		if (data.isEmpty()) {
+			System.err.println("Wasn't expecting to be asked to getEncapsulatedDataType() for this DataType: " + dt);
+		}
+		
+		return data;
+	}
+
+	private String getDataTypeClassification(DataType rc) {
+		String classification = EMFHelper.getSimplifiedClassName(rc);
+		if (classification.contains("Time") || classification.contains("Date") || classification.contains("Year") || classification.contains("Day")) return "DateTime";
+		return classification;
+	}
+
 	private void write() {
 		System.out.println("Writing class files.");
 		for (FieldHolderSource<?> cl : allClassesByQualifiedName.values()) {
