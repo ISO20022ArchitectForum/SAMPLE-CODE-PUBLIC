@@ -1,0 +1,13 @@
+com/swift/standards/lab/common/importer/PerformantXMIResourceFactoryImpl$1.class
+com/swift/standards/lab/model/iso20022/util/ISO20022Helper.class
+com/swift/standards/lab/common/util/StringHelper.class
+com/swift/standards/lab/common/util/UnZipIt.class
+com/swift/standards/lab/common/util/FileHelper.class
+_mains/ISO20022SimpleImporter_Main.class
+com/swift/standards/lab/common/iso20022/importer/ISO20022SimpleImporter$1.class
+com/swift/standards/lab/common/importer/ModelLoader.class
+com/swift/standards/lab/common/iso20022/importer/ISO20022SimpleImporter.class
+com/swift/standards/lab/common/importer/IntrinsicIDCachingXMLResourceFactoryImpl.class
+com/swift/standards/lab/common/util/EMFHelper.class
+com/swift/standards/lab/common/importer/PerformantXMIResourceFactoryImpl.class
+com/swift/standards/lab/common/iso20022/importer/ISO20022SimpleImporter$MySwitch.class

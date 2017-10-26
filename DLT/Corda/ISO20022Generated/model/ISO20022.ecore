@@ -1,0 +1,2450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="iso20022" nsURI="urn:iso:std:iso:20022:2013:ecore" nsPrefix="iso20022">
+  <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+    <details key="basis" value="IMPLEMENTATION_CONSTRAINTS"/>
+    <details key="description" value="#1. namespace uri is urn:iso:std:iso:20022:2013:ecore &#xD;&#xA;#2. ISO20022 meta classes are grouped under a single package. &#xD;&#xA;#3. In the Meta Model, eAttributes are typed with specific EMF DataTypes (EBoolean, EString,...) Those EMF DataTypes are mapped to XSD DataTypes as described in #TODOINSERT REF TO EMF BOOK  &#xD;&#xA;#4. All ISO20022 meta classes extend the abstract meta class ModelEntity that conveys versioning information and the ObjectIdentifier"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Address" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="identification and efficient resolution to the location of a MessagingEndpoint"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="broadCastList" ordered="false"
+        upperBound="-1" eType="#//BroadcastList" eOpposite="#//BroadcastList/address">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a BroadCastList to which this Address belongs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpoint" ordered="false"
+        lowerBound="1" eType="#//MessagingEndpoint" eOpposite="#//MessagingEndpoint/location">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the MessagingEndpoint for the Address"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelEntity" abstract="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract definition of a model entity.&#xD;&#xA;The common meta class which is the generalisation of all Meta Classes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Abstract meta class which is the common ancestor of all ISO20022 meta classes."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nextVersions" ordered="false"
+        upperBound="-1" eType="#//ModelEntity" eOpposite="#//ModelEntity/previousVersion">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="List of next versions of a ModelEntity that stem from this ModelEntity.&#xD;&#xA;Allows version control management."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="RepositoryManagement"/>
+        <details key="description" value="Versioning of Repository Objects"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="previousVersion" ordered="false"
+        eType="#//ModelEntity" eOpposite="#//ModelEntity/nextVersions">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Previous version of a ModelEntity that this ModelEntity stems from.&#xD;&#xA;Allows version control management."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="RepositoryManagement"/>
+        <details key="description" value="Versioning of Repository Concepts"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectIdentifier" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Uniquely identifies the RepositoryConcept"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="ObjectIdentifier moved up to the meta class ModelEntity, that is the common ancestor to all ISO20022 meta classes"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BroadcastList" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="set of references to MessagingEndpoints (identified by their Address), that is used for message broadcasting"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="address" ordered="false"
+        upperBound="-1" eType="#//Address" eOpposite="#//Address/broadCastList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a BroadCastList entry using an Address"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessagingEndpoint" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="addressable node on the MessageTransportSystem which is capable of sending and receiving TransportMessages"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transportSystem" ordered="false"
+        lowerBound="1" eType="#//MessageTransportSystem" eOpposite="#//MessageTransportSystem/endpoint">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageTransportSystem that owns and uses this MessagingEndpoint"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receivedMessage" ordered="false"
+        upperBound="-1" eType="#//TransportMessage" eOpposite="#//TransportMessage/receiver">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the TransportMessage that is received by the receiving MessagingEndpoint"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sentMessage" ordered="false"
+        upperBound="-1" eType="#//TransportMessage" eOpposite="#//TransportMessage/sender">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the TransportMessage that is sent by the sending MessagingEndpoint"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="location" ordered="false"
+        upperBound="-1" eType="#//Address" eOpposite="#//Address/endpoint">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="an Address used to identify the MessagingEndpoint"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageTransportSystem" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="mechanism that receives Transport Messages from the sending MessagingEndpoint, transports them, and delivers them to the receiving MessagingEndpoint"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpoint" ordered="false"
+        upperBound="-1" eType="#//MessagingEndpoint" containment="true" eOpposite="#//MessagingEndpoint/transportSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a MessagingEndpoint owned by a single MessageTransportSystem"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TransportMessage" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="document that is an instance of the MessageTransportSystem message schema"/>
+    </eAnnotations>
+    <eOperations name="sameMessageTransportSystem" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The sender and receiver of a TransportMessage must use the same MessageTransportSystem&#xD;&#xA;receiver->asBag().transportSystem = sender.transportSystem->asBag()"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" ordered="false"
+        lowerBound="1" eType="#//MessagingEndpoint" eOpposite="#//MessagingEndpoint/sentMessage">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the sending MessagingEndpoint of a TransportMessage"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageInstance" ordered="false"
+        lowerBound="1" eType="#//MessageInstance" eOpposite="#//MessageInstance/transportMessage">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance that is part of the TransportMessage"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" ordered="false"
+        upperBound="-1" eType="#//MessagingEndpoint" eOpposite="#//MessagingEndpoint/receivedMessage">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the receiving MessagingEndpoint in a TransportMessage"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageInstance" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="instance of MessageDefinition, containing a set of structured information exchanged between BusinessRoles, in the scope of a BusinessTransaction"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specification" ordered="false"
+        lowerBound="1" eType="#//SyntaxMessageScheme">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the SyntaxScheme instantiated by this MessageInstance"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transportMessage" ordered="false"
+        lowerBound="1" upperBound="-1" eType="#//TransportMessage" eOpposite="#//TransportMessage/messageInstance">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the TransportMessage that contains the MessageInstance"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SyntaxMessageScheme" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="syntax processable notation used to define the structure of a MessageInstance in a particular syntax"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageDefinitionTrace"
+        ordered="false" eType="#//MessageDefinition" eOpposite="#//MessageDefinition/derivation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageDefinitionTrace from the SyntaxMessageScheme to the MessageDefinition"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelCatalogueEntry" abstract="true"
+      eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="artefact in the BusinessProcessCatalogue that is not owned by another artefact in the Repository"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessProcessCatalogue"
+        ordered="false" lowerBound="1" eType="#//BusinessProcessCatalogue" eOpposite="#//BusinessProcessCatalogue/topLevelCatalogueEntry">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessProcessCatalogue that contains all ISO 20022 TopLevelCatalogueEntries"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RepositoryConcept" abstract="true" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="artefact that has been defined during the development of an ISO 20022 MessageDefinition and which is stored in the Repository"/>
+    </eAnnotations>
+    <eOperations name="RemovalDateRegistrationStatus" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="If a removalDate is specified then the registrationStatus must be OBSOLETE&#xD;&#xA;removalDate->notEmpty( ) implies registrationStatus = RegistrationStatus::OBSOLETE"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eOperations name="NameFirstLetterUppercase" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="First letter of name shall be upper case. [A-Z]&#xD;&#xA;Set {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'}->exists(x|x=name.substring(1,1))"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a word or set of words by which a RepositoryConcept is known, addressed or referred to"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="definition" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="describes the semantic meaning of a RepositoryConcept"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="semanticMarkup" ordered="false"
+        upperBound="-1" eType="#//SemanticMarkup" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Enables modelers to markup elements of the Repository with semantic metadata."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="SemanticMarkup is structured with a MetaClass instead of a Tuple text.This provides more control, structure and validation to the feature and avoids the need for reparsing each time the value of a textual feature."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="doclet" ordered="false"
+        upperBound="-1" eType="#//Doclet" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Doclets of the entity, used for documentation."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="RepositoryManagement"/>
+        <details key="description" value="to store documentation information : scope, usage, ..."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="example" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="provides a representative instance of a RepositoryConcept"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraint" upperBound="-1"
+        eType="#//Constraint" containment="true" eOpposite="#//Constraint/owner">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a property of a RepositoryConcept specifying a semantic condition or restriction expressed in natural language text and potentially in a formal notation"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="registrationStatus" ordered="false"
+        lowerBound="1" eType="#//RegistrationStatus" defaultValueLiteral="Provisionally Registered">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies in which stage of the registration lifecycle a RepositoryConcept is in"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="removalDate" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the date at which a RepositoryConcept will cease or has ceased to be part of the Repository"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SemanticMarkup" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Enables modelers to markup elements of the Repository with semantic metadata. Each semanticMarkup string is a TupleValue. "/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Semantic Markup represented as a structured meta class instead of as a textual value"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of semantic mark-up e.g. &quot;synonym&quot;."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Semantic Markup represented as a structured meta class instead of as a textual value"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" ordered="false"
+        upperBound="-1" eType="#//SemanticMarkupElement" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The elements of semantic markup."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Semantic Markup represented as a structured meta class instead of as a textual value"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SemanticMarkupElement" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A semantic mark-up element defines a name + value pair for content. E.g. for synonyms, the name will be either &quot;name&quot; or &quot;context&quot; and the value will be the corresponding synonym name or context."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Semantic Markup represented as a structured meta class instead of as a textual value"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Name of the semantic mark-up element."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Semantic Markup represented as a structured meta class instead of as a textual value"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Value of the semantic mark-up element."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Semantic Markup represented as a structured meta class instead of as a textual value"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Doclet" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Doclet provides a way of adding categorised documentation to an model entity."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="RepositoryManagement"/>
+      <details key="description" value="to store documentation information : scope, usage, ..."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of doclet. The definition of the doclet type is left open so that new doclet types can be easily added without the need for a change to the meta-model."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="RepositoryManagement"/>
+        <details key="description" value="The type of the additional documentation information : scope, usage, title,..."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The content for the documentation."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="RepositoryManagement"/>
+        <details key="description" value="The actual content of the additional documentation information : scope, usage, title,..."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Constraint" eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A rule that must be universally satisfied i.e. all conditions required for the Constraint to be applicable, are known."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The description of a Constraint in a specific language, defined in expressionLanguage"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expressionLanguage" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The language in which a Constraint in expressed."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
+        lowerBound="1" eType="#//RepositoryConcept" eOpposite="#//RepositoryConcept/constraint">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The owner of the Rule."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RegistrationStatus">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="the enumeration of the standing of a RepositoryConcept in the Repository"/>
+    </eAnnotations>
+    <eLiterals name="PROVISIONALLY_REGISTERED" literal="Provisionally Registered">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="status of a RepositoryConcept, showing it is pending final approval"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="REGISTERED" value="1" literal="Registered">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="status of a RepositoryConcept, showing it is ISO 20022 compliant, approved by the Registration Authority and can be used"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="OBSOLETE" value="2" literal="Obsolete">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="status of a RepositoryConcept, showing it is still compliant but cannot be used in new ISO 20022 compliant developments."/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessProcessCatalogue" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Part of the ISO 20022 Repository that contains all Business Process and BusinessTransaction related items."/>
+    </eAnnotations>
+    <eOperations name="EntriesHaveUniqueName" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All TopLevelCatalogueEntries of a BusinessProcessCatalogue must have different names&#xD;&#xA;topLevelCatalogueEntry->forAll(entry1,entry2 | entry1 &lt;> entry2 implies entry1.name &lt;> entry2.name)"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="repository" ordered="false"
+        lowerBound="1" eType="#//Repository" eOpposite="#//Repository/businessProcessCatalogue">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Repository that owns the BusinessProcessCatalogue."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="topLevelCatalogueEntry"
+        ordered="false" upperBound="-1" eType="#//TopLevelCatalogueEntry" containment="true"
+        eOpposite="#//TopLevelCatalogueEntry/businessProcessCatalogue">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a TopLevelCatalogueEntry in the BusinessProcessCatalague"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Repository" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="place where all RepositoryConcepts are stored"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDictionary" ordered="false"
+        lowerBound="1" eType="#//DataDictionary" containment="true" eOpposite="#//DataDictionary/repository">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the DataDictionary owned by the ISO 20022 Repository"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessProcessCatalogue"
+        ordered="false" lowerBound="1" eType="#//BusinessProcessCatalogue" containment="true"
+        eOpposite="#//BusinessProcessCatalogue/repository">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessProcessCatalogue owned by the ISO 20022 Repository"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataDictionary" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Part of the ISO 20022 Repository that contains all items that can be re-used during business process modelling and message definition activities."/>
+    </eAnnotations>
+    <eOperations name="EntriesHaveUniqueName" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All TopLevelDictionaryEntries of a DataDictionary must have different names&#xD;&#xA;topLevelDictionaryEntry->forAll(entry1,entry2 | entry1 &lt;> entry2 implies entry1.name &lt;> entry2.name)"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="topLevelDictionaryEntry"
+        ordered="false" upperBound="-1" eType="#//TopLevelDictionaryEntry" containment="true"
+        eOpposite="#//TopLevelDictionaryEntry/dataDictionary">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a TopLevelDictionaryEntry in the DataDictionary"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="repository" ordered="false"
+        lowerBound="1" eType="#//Repository" eOpposite="#//Repository/dataDictionary">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Repository that owns the DataDictionary."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelDictionaryEntry" abstract="true"
+      eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="artefact in the Dictionary that is not owned by another artefact in the Repository"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataDictionary" ordered="false"
+        lowerBound="1" eType="#//DataDictionary" eOpposite="#//DataDictionary/topLevelDictionaryEntry">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the DataDictionary that contains all ISO 20022 TopLevelDictionaryEntries"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageDefinition" eSuperTypes="#//RepositoryType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Formal description of the structure of a MessageInstance"/>
+    </eAnnotations>
+    <eOperations name="BusinessAreaNameMatch" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The businessArea of the messageDefinitionIdentifier of this MessageDefinition is equal to the code of the BusinessArea that contains this MessageDefinition&#xD;&#xA;businessArea.code = messageDefinitionIdentifier.businessArea"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageSet" ordered="false"
+        upperBound="-1" eType="#//MessageSet" eOpposite="#//MessageSet/messageDefinition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageSet to which the MessageDefinition belongs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlName" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Name used in an XML schema for the ComplexType that defines the Message Definition."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlTag" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Name used in an XML schema for the first element under the root element of a Message Definition."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessArea" ordered="false"
+        lowerBound="1" eType="#//BusinessArea" eOpposite="#//BusinessArea/messageDefinition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The BusinessArea to which this MessageDefinition belongs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="xors" upperBound="-1" eType="#//Xor"
+        containment="true" eOpposite="#//Xor/messageDefinition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="XORs applied to a selection of the elements of the Message Definition."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rootElement" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="Document">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a property of MessageDefinition that specifies the top level element of the MessageDefinition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageBuildingBlock" lowerBound="1"
+        upperBound="-1" eType="#//MessageBuildingBlock" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a MessageBuildingBlock belonging to this MessageDefinition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="choreography" ordered="false"
+        upperBound="-1" eType="#//MessageChoreography" eOpposite="#//MessageChoreography/messageDefinition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageChoreography to which the MessageDefinition belongs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trace" ordered="false"
+        upperBound="-1" eType="#//MessageTransmission" eOpposite="#//MessageTransmission/derivation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="all of the MessageTypeTraces from one MessageDefinition that are traced to different MessageTransmissions"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageDefinitionIdentifier"
+        ordered="false" lowerBound="1" eType="#//MessageDefinitionIdentifier" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The MessageDefinitionIdentifier for this MessageDefinition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivation" ordered="false"
+        upperBound="-1" eType="#//SyntaxMessageScheme" eOpposite="#//SyntaxMessageScheme/messageDefinitionTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All of the SyntaxMessageSchemes that are derived from from one MessageDefinition"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RepositoryType" abstract="true" eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract layer : Abstract meta class for representing any Type."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Abstract layer : Abstract meta class for representing any Type."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageSet" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A set of MessageDefinitions"/>
+    </eAnnotations>
+    <eOperations name="GeneratedSyntaxDerivation" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the generated syntax is derived from the syntax for a validEncoding&#xD;&#xA; generatedSyntax->asBag() = validEncoding.syntax"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="generatedSyntax" ordered="false"
+        upperBound="-1" eType="#//Syntax" changeable="false" volatile="true" transient="true"
+        derived="true" eOpposite="#//Syntax/generatedFor">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="identification of the syntax for a specific EncodingScheme"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="validEncoding" ordered="false"
+        upperBound="-1" eType="#//Encoding" eOpposite="#//Encoding/messageSet">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the set of encodings considered ISO 20022 valid for this MessageSet"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageDefinition" ordered="false"
+        upperBound="-1" eType="#//MessageDefinition" eOpposite="#//MessageDefinition/messageSet">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageDefinition that belongs to the MessageSet"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Syntax" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="a particular syntax for a MessageInstance"/>
+    </eAnnotations>
+    <eOperations name="GeneratedForDerivation" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the syntax that is valid for a MessageSet, based on the Encoding used&#xD;&#xA;generatedFor-> asBag()=possibleEncodings.messageSet"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="possibleEncodings" ordered="false"
+        lowerBound="1" upperBound="-1" eType="#//Encoding" eOpposite="#//Encoding/syntax">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the set of possible encodings for a given Syntax"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="generatedFor" ordered="false"
+        upperBound="-1" eType="#//MessageSet" changeable="false" volatile="true" transient="true"
+        derived="true" eOpposite="#//MessageSet/generatedSyntax">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the scheme in which a syntax is encoded"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Encoding" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A particular set of encoding rules for a MessageInstance."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageSet" ordered="false"
+        upperBound="-1" eType="#//MessageSet" eOpposite="#//MessageSet/validEncoding">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The MessageSets for which this Encoding is a valid ISO 20022 encoding"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="syntax" ordered="false"
+        lowerBound="1" eType="#//Syntax" eOpposite="#//Syntax/possibleEncodings">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The source syntax on which an encoding applies"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessArea" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Set of strongly related business activities, that provide a self-standing business value to a set of BusinessRoles."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value of the BusinessArea code."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageDefinition" ordered="false"
+        upperBound="-1" eType="#//MessageDefinition" containment="true" eOpposite="#//MessageDefinition/businessArea">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The MessageDefinition that belongs to the BusinessArea."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Xor" eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A rule which enforces a choice amongst a set of Message Elements contained either within a Message Definition or a Message Component."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="LEGACY"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="impactedElements" upperBound="-1"
+        eType="#//MessageElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Message Elements impacted by the XOR."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageComponent" ordered="false"
+        eType="#//MessageComponent" eOpposite="#//MessageComponent/xors">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Message Component owning the XOR."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="impactedMessageBuildingBlocks"
+        upperBound="-1" eType="#//MessageBuildingBlock">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="MessageBuildingBlocks impacted by the XOR."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageDefinition" ordered="false"
+        eType="#//MessageDefinition" eOpposite="#//MessageDefinition/xors">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Message Definition owning the XOR."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageElement" abstract="true" eSuperTypes="#//MessageConstruct #//MessageConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Characteristic of a MessageComponent / ChoiceComponent, having a unique meaning within the scope of that MessageComponent / ChoiceComponent"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+    </eAnnotations>
+    <eOperations name="NoMoreThanOneTrace" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A MessageElement may not trace to both a BusinessComponent and a BusinessElement&#xD;&#xA;businessComponentTrace->size( ) + businessElementTrace->size( ) &lt;= 1"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eOperations name="CardinalityAlignment" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A trace can only raise the minimum cardinality and can only lower the maximum cardinality&#xD;&#xA;minOccurs >= businessElementTrace.minOccurs and (businessElementTrace.maxOccurs.oclIsUndefined() or maxOccurs &lt;= businessElementTrace.maxOccurs)&#xD;&#xA;"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTechnical" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a property of a MessageElement indicating whether it has a semantic relationship to a BusinessComponent / BusinessElement, i.e. whether it is derived from a BusinessComponent  /  BusinessElement"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessComponentTrace"
+        ordered="false" eType="#//BusinessComponent" eOpposite="#//BusinessComponent/derivationElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the trace of a MessageElement to the BusinessComponent from which it is derived"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessElementTrace" ordered="false"
+        eType="#//BusinessElement" eOpposite="#//BusinessElement/derivation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The trace of a MessageElement to the BusinessElement from which the MessageElement is derived"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="componentContext" ordered="false"
+        lowerBound="1" eType="#//MessageElementContainer" eOpposite="#//MessageElementContainer/messageElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageComponent that describes the context within which the MessageElement is defined"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDerived" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a Property of a MessageElement specifying whether a MessageElement can be computed using other MessageElements, but that is shown for clarity even though it adds no semantic information"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageConstruct" abstract="true" eSuperTypes="#//Construct">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract layer : Abstract meta class for representing a MessageElement or a MessageBuildingBlock"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Abstract layer : Abstract meta class for representing a MessageElement or a MessageBuildingBlock"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlTag" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="XML schema tag name for the element."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="xmlMemberType" ordered="false"
+        lowerBound="1" eType="#//LogicalType" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Direct reference to the type of a MessageElement or MessageBuildingBlock"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Construct" abstract="true" eSuperTypes="#//RepositoryConcept #//MultiplicityEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract layer : Abstract meta class for representing a BusinessElement, a MessageElement or a MessageBuildingBlock."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Abstract layer : Abstract meta class for representing a BusinessElement, a MessageElement or a MessageBuildingBlock."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="memberType" ordered="false"
+        lowerBound="1" eType="#//RepositoryType" changeable="false" volatile="true"
+        transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of this Member"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MultiplicityEntity" abstract="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any model entity where a multiplicity can be defined."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Two features maxOccurs and minOccurs are used instead of the single DataType feature Cardinality."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxOccurs" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="MaxOccurs is an integer with a value greater than or equal to the lower limit. If undefined an unlimited upper value is assumed."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Two features maxOccurs and minOccurs are used instead of the single DataType feature Cardinality."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minOccurs" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"
+        defaultValueLiteral="0">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="MinOccurs is an integer with value greater than or equal to zero. If undefined a value of zero is assumed."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Two features maxOccurs and minOccurs are used instead of the single DataType feature Cardinality."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalType" abstract="true" eSuperTypes="#//RepositoryType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract layer : Abstract meta class for representing the type of a MessageBuildingBlock or MessageElement, that is : a DataType, MessageComponent, ChoiceComponent or ExternalSchema or UserDefined"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Abstract layer : Abstract meta class for representing the type of a MessageBuildingBlock or MessageElement, that is : a DataType, MessageComponent, ChoiceComponent or ExternalSchema or UserDefined"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageConcept" abstract="true" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="DataDictionary artefact that is used in a MessageDefinition and that is not a DataType."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessComponent" eSuperTypes="#//TopLevelDictionaryEntry #//BusinessElementType #//BusinessConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Representation of a (part of a) key business notion, characterized by specific BusinessElements."/>
+    </eAnnotations>
+    <eOperations name="BusinessElementsHaveUniqueNames" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All BusinessElements contained by this BusinessComponents have different names&#xD;&#xA;element->forAll(el1,el2 : BusinessElement| el1 &lt;> el2 implies el1.name &lt;> el2.name)"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subType" ordered="false"
+        upperBound="-1" eType="#//BusinessComponent" eOpposite="#//BusinessComponent/superType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The BusinessComponents that specialize this BusinessComponent."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="superType" ordered="false"
+        eType="#//BusinessComponent" eOpposite="#//BusinessComponent/subType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The BusinessComponent that is specialized by this BusinessComponent."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+        eType="#//BusinessElement" containment="true" eOpposite="#//BusinessElement/elementContext">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A semantic property of a BusinessComponent."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivationComponent" ordered="false"
+        upperBound="-1" eType="#//MessageComponentType" eOpposite="#//MessageComponentType/trace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All of the MessageComponentTypes that derive from this BusinessComponent."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="associationDomain" ordered="false"
+        upperBound="-1" eType="#//BusinessAssociationEnd" eOpposite="#//BusinessAssociationEnd/type">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Describes the semantics that determine how the BusinessComponent may participate in the BusinessAssociation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivationElement" ordered="false"
+        upperBound="-1" eType="#//MessageElement" eOpposite="#//MessageElement/businessComponentTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All of the MessageElements that derive from this BusinessComponent."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessElementType" abstract="true"
+      eSuperTypes="#//RepositoryType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract layer : Abstract meta class for representing the complex type of a BusinessElement, that is : a DataType or a BusinessComponent"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Abstract layer : Abstract meta class for representing the complex type of a BusinessElement, that is : a DataType or a BusinessComponent"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessConcept" abstract="true" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A DataDictionary item defined at the Conceptual Level with a business meaning."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessElement" abstract="true" eSuperTypes="#//Construct #//BusinessConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Property of a BusinessComponent that has a distinctive meaning within the scope of that BusinessComponent."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDerived" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies whether a BusinessElement can be computed using other BusinessElements, but that is shown for clarity even though it adds no semantic information."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivation" ordered="false"
+        upperBound="-1" eType="#//MessageElement" eOpposite="#//MessageElement/businessElementTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All of the MessageElements that derive from one BusinessElement in a specific BusinessComponent."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessElementType" ordered="false"
+        lowerBound="1" eType="#//BusinessElementType" changeable="false" volatile="true"
+        transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Derived direct reference to the type of the BusinessElement."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementContext" ordered="false"
+        lowerBound="1" eType="#//BusinessComponent" eOpposite="#//BusinessComponent/element">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The business context in which the BusinessElement is used"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageComponentType" abstract="true"
+      eSuperTypes="#//TopLevelDictionaryEntry #//LogicalType #//MessageConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="MessageComponent, ExternalSchema, UserDefined or ChoiceComponent"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageBuildingBlock" ordered="false"
+        upperBound="-1" eType="#//MessageBuildingBlock" eOpposite="#//MessageBuildingBlock/complexType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The MessageBuildingBlock that is the context for this MessageComponentType"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTechnical" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        changeable="false" volatile="true" transient="true" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A property indicating the absense of a semantic relationship to a BusinessComponent, i.e. it is not derived from a BusinessComponent"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trace" ordered="false"
+        eType="#//BusinessComponent" eOpposite="#//BusinessComponent/derivationComponent">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The BusinessComponent that this MessageComponentType is derived from."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageBuildingBlock" eSuperTypes="#//MessageConstruct">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Characteristic of a MessageDefinition, having a unique meaning within the scope of that MessageDefinition."/>
+    </eAnnotations>
+    <eOperations name="MessageBuildingBlockHasExactlyOneType" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A MessageBuildingBlock must have exactly one of the following: simpleType or complexType.&#xD;&#xA;complexType->size() + simpleType->size()  = 1"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simpleType" ordered="false"
+        eType="#//DataType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The simple content model of a MessageBuildingBlock when it is expressed using a DataType"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="complexType" ordered="false"
+        eType="#//MessageComponentType" eOpposite="#//MessageComponentType/messageBuildingBlock">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the complex content model of a MessageBuildingBlock when it is expressed using a MessageComponentType"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataType" abstract="true" eSuperTypes="#//TopLevelDictionaryEntry #//BusinessElementType #//LogicalType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Representation of a set of values without identity."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessAssociationEnd" eSuperTypes="#//BusinessElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The context of a BusinessAssociation must be the type of its opposite and vice-versa"/>
+    </eAnnotations>
+    <eOperations name="AtMostOneAggregatedEnd" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Two opposite association ends may not have composite or shared aggregation at the same time&#xD;&#xA;not(aggregation &lt;> Aggregation::NONE and opposite.aggregation &lt;> Aggregation::NONE)&#xD;&#xA;"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eOperations name="ContextConsistentWithType" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The context of this end must be the type of the opposite and vice-versa&#xD;&#xA;opposite.elementContext = type and elementContext = opposite.type"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opposite" ordered="false"
+        eType="#//BusinessAssociationEnd">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Opposite end of a bi-directional relationship between 2 BusinessComponents."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Direct reference to the opposite BusinessAssociationEnd"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="aggregation" ordered="false"
+        lowerBound="1" eType="#//Aggregation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Expresses the strength of the semantic relationship between two BusinessComponents."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" ordered="false" lowerBound="1"
+        eType="#//BusinessComponent" eOpposite="#//BusinessComponent/associationDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies that a BusinessAssociationEnd always has a complex content model and is therefore always typed by a BusinessComponent, contrarily to a BusinessAttribute which may be typed by a data type."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Aggregation">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="enumeration of the different kinds of &quot;has a&quot; relationship supported by the metamodel"/>
+    </eAnnotations>
+    <eLiterals name="NONE">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the relationship between two RepositoryConcepts is expressed through a simple association."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="COMPOSITE" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a kind of relationship between 2 RepositoryConcepts expressing that one of the concepts cannot exist without the other."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="SHARED" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a kind of relationship between 2 RepositoryConcepts whereby one component may belong to multiple aggregates"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageElementContainer" abstract="true"
+      eSuperTypes="#//MessageComponentType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Re-usable Dictionary Item that is a building block for assembling MessageDefinitions, composed of a sequence of MessageElements"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+    </eAnnotations>
+    <eOperations name="MessageElementsHaveUniqueNames" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All MessageElements contained in this MessageComponentContainer must have different names.&#xD;&#xA;messageElement->forAll(el1,el2 |  el1 &lt;> el2 implies el1.name &lt;> el2.name)"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eOperations name="technicalElement" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All the elements belonging to a technical MessageComponentContainer must be technical.&#xD;&#xA;self.isTechnical implies messageElement -> forAll(messageElement|messageElement.isTechnical)"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageElement" upperBound="-1"
+        eType="#//MessageElement" containment="true" eOpposite="#//MessageElement/componentContext">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a semantic property of a MessageComponentType"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageComponent" eSuperTypes="#//MessageElementContainer">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="re-usable Dictionary Item that is a building block for assembling MessageDefinitions, composed of a sequence of MessageElements"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="xors" upperBound="-1" eType="#//Xor"
+        containment="true" eOpposite="#//Xor/messageComponent">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="XORs applied to a selection of the elements of the Message Component."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageChoreography" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="precise and complete description of a MessageInstance exchange within a BusinessTransaction, describing the sequence and correlation of MessageInstances within a conversation, including the constraints on the interaction between Participants"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessTransactionTrace"
+        ordered="false" eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/trace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessTransactionTrace from the MessageChoreography to the BusinessTransaction"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageDefinition" ordered="false"
+        lowerBound="1" upperBound="-1" eType="#//MessageDefinition" eOpposite="#//MessageDefinition/choreography">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The MessageDefinition that is used in a MessageChoreography."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessTransaction" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="particular solution that meets the communication requirements and the interaction requirements of a particular BusinessProcess and BusinessArea"/>
+    </eAnnotations>
+    <eOperations name="MessageTransmissionsHaveUniqueNames" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All MessageTransmissions contained in this BusinessTransaction shall have different names.&#xD;&#xA;transmission->forAll(msg1,msg2 | msg1 &lt;> msg2 implies msg1.name &lt;> msg2.name)"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eOperations name="ParticipantsHaveUniqueNames" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All Participants of this BusinessTransaction shall have different names.&#xD;&#xA;participant->forAll(p1,p2 | p1 &lt;> p2 implies p1.name &lt;> p2.name)"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessProcessTrace" ordered="false"
+        lowerBound="1" eType="#//BusinessProcess" eOpposite="#//BusinessProcess/businessProcessTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessProcessTrace that is used to trace the BusinessTransaction"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participant" ordered="false"
+        upperBound="-1" eType="#//Participant" containment="true" eOpposite="#//Participant/businessTransaction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the involvement of a BusinessRole in a BusinessTransaction"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transmission" upperBound="-1"
+        eType="#//MessageTransmission" containment="true" eOpposite="#//MessageTransmission/businessTransaction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="he conveyance of information from a sending Participant in the context of a BusinessTransaction"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageTransportMode" ordered="false"
+        lowerBound="1" eType="#//MessageTransportMode" eOpposite="#//MessageTransportMode/businessTransaction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Provides a set of characterstics for a MessageTransportMode to have in the context of a single BusinessTransaction"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subTransaction" ordered="false"
+        upperBound="-1" eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/parentTransaction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="decomposition of a BusinessTransaction into a number of sub transactions which are BusinessTransactions in their own right."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentTransaction" ordered="false"
+        eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/subTransaction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="assembly of a number of BusinessTransactions that together form a BusinessTransaction"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trace" ordered="false"
+        upperBound="-1" eType="#//MessageChoreography" eOpposite="#//MessageChoreography/businessTransactionTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="all of the BusinessTransactionTraces that derive MessageChoreographies from one BusinessTransaction"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessProcess" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="unrealized definition of the business activities undertaken by BusinessRoles within a BusinessArea whereby each BusinessProcess fulfils one type of business activity and whereby a BusinessProcess may include and extend other BusinessProcesses"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extender" ordered="false"
+        upperBound="-1" eType="#//BusinessProcess" eOpposite="#//BusinessProcess/extended">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the BusinessProcess that is extending another BusinessProcess"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extended" ordered="false"
+        upperBound="-1" eType="#//BusinessProcess" eOpposite="#//BusinessProcess/extender">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the BusinessProcess that is extended by another BusinessProcess"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="included" ordered="false"
+        upperBound="-1" eType="#//BusinessProcess" eOpposite="#//BusinessProcess/includer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the BusinessProcess that is included by another BusinessProcess"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="includer" ordered="false"
+        upperBound="-1" eType="#//BusinessProcess" eOpposite="#//BusinessProcess/included">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the BusinessProcess that is incuding another BusinessProcess"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessRole" ordered="false"
+        upperBound="-1" eType="#//BusinessRole" containment="true" eOpposite="#//BusinessRole/businessProcess">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessRole that plays a role in BusinessProcess that owns it."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessProcessTrace" ordered="false"
+        upperBound="-1" eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/businessProcessTrace">
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessRole" eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Functional role played by a business actor in a particular BusinessProcess or BusinessTransaction."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessRoleTrace" ordered="false"
+        upperBound="-1" eType="#//Participant" eOpposite="#//Participant/businessRoleTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessRoleTrace for a BusinessRole"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessProcess" ordered="false"
+        lowerBound="1" eType="#//BusinessProcess" eOpposite="#//BusinessProcess/businessRole">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessProcess that owns the BusinessRole"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Participant" eSuperTypes="#//RepositoryConcept #//MultiplicityEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="involvement of a BusinessRole in a BusinessTransaction"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessTransaction" ordered="false"
+        lowerBound="1" eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/participant">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessTransaction in which the Participant plays a role"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receives" ordered="false"
+        upperBound="-1" eType="#//Receive" eOpposite="#//Receive/receiver">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The handling of a stimulus passed from a sending participant"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sends" ordered="false"
+        upperBound="-1" eType="#//Send" eOpposite="#//Send/sender">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The passing of information from a sending Participant to a receiving Participant"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessRoleTrace" ordered="false"
+        lowerBound="1" eType="#//BusinessRole" eOpposite="#//BusinessRole/businessRoleTrace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessRoleTrace that traces the Participant to its BusinessRole"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Receive" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="the handling of a stimulus passed from a sender instance"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageTransmission" ordered="false"
+        lowerBound="1" eType="#//MessageTransmission" eOpposite="#//MessageTransmission/receive">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the stimulus handled as part of the Receive"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" ordered="false"
+        lowerBound="1" eType="#//Participant" eOpposite="#//Participant/receives">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the object handling a stimulus passed from the sender"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageTransmission" eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="the passing of information from one Participant to another in the context of a BusinessTransaction"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessTransaction" ordered="false"
+        lowerBound="1" eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/transmission">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the BusinessTransaction to which the MessageTransmission belongs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivation" ordered="false"
+        upperBound="-1" eType="#//MessageDefinition" eOpposite="#//MessageDefinition/trace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="all of the MessagetypeTraces that derive MessageDefinitions from one MessageTransmission"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageTypeDescription"
+        ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Describes the purpose and scope of the MessageTransmission in the BusinessTransaction"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="send" ordered="false" lowerBound="1"
+        eType="#//Send" containment="true" eOpposite="#//Send/messageTransmission">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the passing of a MessagTransmission from a sender instance to a receiver instance"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receive" ordered="false"
+        upperBound="-1" eType="#//Receive" containment="true" eOpposite="#//Receive/messageTransmission">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the handling of a MessageTransmission passed from a sender instance"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Send" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="the passing of a stimulus from a sender instance to a receiver instance"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" ordered="false"
+        lowerBound="1" eType="#//Participant" eOpposite="#//Participant/sends">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The object passing a stimulus to a receiver object"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageTransmission" ordered="false"
+        lowerBound="1" eType="#//MessageTransmission" eOpposite="#//MessageTransmission/send">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the stimulus handled as part of the Send"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageTransportMode" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="group of settings for the values for the MessageTransportCharacteristics properties"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="boundedCommunicationDelay"
+        ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the maximum duration of time within which a TransportMessage must be delivered"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maximumClockVariation"
+        ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="clocks must maintain a maximum (inclusive) variance from UTC for the supported MessageTransportMode"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maximumMessageSize" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the maximum size of a TransportMessage in kilobytes (any positive integer greater than zero)."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageDeliveryWindow"
+        ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageDeliveryOrder is relaxed by a rolling window of time in which the Transport Messages may be delivered out of order whereby for each TransportMessage delivered it defines the maximum duration of time it may be out of sequence within"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSendingWindow" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the Choreography is relaxed by a rolling window of time in which the Business Messages may be sent out of order whereby for each Business Message sent it defines the maximum duration of time it may be out of sequence with"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deliveryAssurance" ordered="false"
+        lowerBound="1" eType="#//DeliveryAssurance">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the degree to which the sending MessagingEndpoint is assured that a TransportMessage will be delivered"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="durability" ordered="false"
+        lowerBound="1" eType="#//Durability">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="whether the MessageTransportSystem safely retains a TransportMessage until it has been received by the destination MessagingEndpoint"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageCasting" ordered="false"
+        lowerBound="1" eType="#//MessageCasting">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies how receiving MessagingEndpoints may be addressed in a TransportMessage"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageDeliveryOrder" ordered="false"
+        lowerBound="1" eType="#//MessageDeliveryOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="indicates to what extent Transport Messages from a sending MessagingEndpoint arrive in the order in which they were sent at the receiving MessagingEndpoints"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageValidationLevel"
+        ordered="false" lowerBound="1" eType="#//MessageValidationLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the level of validation the MessageTransportSystem has tested the message"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageValidationOnOff"
+        ordered="false" lowerBound="1" eType="#//MessageValidationOnOff">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies whether the MessageTransportSystem validates the MessageInstance with respect to SyntaxMessageScheme, Constraints, the MarketPractices, and the MessageChoreography"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageValidationResults"
+        ordered="false" lowerBound="1" eType="#//MessageValidationResults">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies how the MessageTransport System acts upon the results of MessageValidationOnOff"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="receiverAsynchronicity"
+        ordered="false" lowerBound="1" eType="#//ReceiverAsynchronicity">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="indicates whether a receiving MessagingEndpoint blocks the sending and receipt of other Transport Messages until it sends a response to this TransportMessage&#xD;&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="senderAsynchronicity" ordered="false"
+        lowerBound="1" eType="#//SenderAsynchronicity">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="indicates whether a sending MessagingEndpoint blocks after sending a TransportMessage to the MessageTransportSystem while waiting for a response from a MessagingEndpoint"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessTransaction" ordered="false"
+        upperBound="-1" eType="#//BusinessTransaction" eOpposite="#//BusinessTransaction/messageTransportMode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the BusinessTransaction for which a set of MessageTransportMode characteristics apply"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DeliveryAssurance">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, specifying the degree to which the sending MessagingEndpoint is assured that a TransportMessage will be delivered&#xD;&#xA;"/>
+    </eAnnotations>
+    <eLiterals name="AT_LEAST_ONCE">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the receiving Messaging Endpoint receives the TransportMessage at least once"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="EXACTLY_ONCE" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the receiving Messaging Endpoint receives the TransportMessage exactly once"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="AT_MOST_ONCE" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the receiving MessagingEndpoint receives the TransportMessage at most once. There is no assurance a TransportMessage will be delivered"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Durability">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, indicating whether the MessageTransportSystem safely retains a TransportMessage until it has been received by the destination MessagingEndpoint"/>
+    </eAnnotations>
+    <eLiterals name="DURABLE">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the TransportMessage is kept available indefinitely until the message is delivered to the destination MessagingEndpoint. The TransportMessage is only kept available if it is ready for delivery within the BoundedCommunicationDelay; otherwise it expires like every other non-durable message"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="PERSISTENT" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the TransportMessage is kept available until it is delivered to the receiving MessagingEndpoint or until it is expired because the BoundedCommunicationDelay is exceeded"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="TRANSIENT" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the TransportMessage is not kept available and will not be delivered if the receiving MessagingEndpoint is not available"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessageCasting">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, indicating how receiving MessagingEndpoints may be addressed in a TransportMessage"/>
+    </eAnnotations>
+    <eLiterals name="UNICAST">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="TransportMessages are addressed to a single receiving MessagingEndpoint"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="MULTICAST" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="TransportMessages are addressed to nought to many receiving MessagingEndpoints"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="BROADCAST" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="TransportMessages are addressed to a single Broadcast List"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="ANYCAST" value="3">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="TransportMessages may be Multicast or Broadcast"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessageDeliveryOrder">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, indicating to what extent TransportMessages from a sending MessagingEndpoint arrive in the order in which they were sent at the receiving MessagingEndpoints"/>
+    </eAnnotations>
+    <eLiterals name="EXPECTED_CAUSAL_ORDER">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the receipt order of TransportMessages at all receivers is preserved across all sending MessagingEndpoints"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="FIFO_ORDERED" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="at every receiver, the order of receipt of TransportMessages is preserved for each sending MessagingEndpoint but not across sending MessagingEndpoints"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="UNORDERED" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="TransportMessages may arrive in any order at the receiving MessagingEndpoints. The only limitation is the Bounded Communication Delay"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessageValidationLevel">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, indicating the level of validation that is required by the MessageTransportSystem"/>
+    </eAnnotations>
+    <eLiterals name="NO_VALIDATION">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is not validated"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="SYNTAX_VALID" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance has its syntax validated."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="SCHEMA_VALID" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is Syntax Valid plus validated against the Syntax Message Scheme."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="MESSAGE_VALID" value="3">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is Schema Valid plus validated against the MessageRules"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="RULE_VALID" value="4">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is Message Valid plus validated against the BusinessRules"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="MARKET_PRACTICE_VALID" value="5">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is Message Valid plus validated against the Market Practices"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="BUSINESS_PROCESS_VALID" value="6">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is Message Valid plus validated against the MessageChoreography"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="COMPLETELY_VALID" value="7">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the MessageInstance is Message Valid plus validated against all Rules and MarketPractices"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessageValidationOnOff">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, specifying whether the MessageTransportSystem validates the MessageInstance with respect to SyntaxMessageScheme, Rules, the MarketPractices, and the MessageChoreography"/>
+    </eAnnotations>
+    <eLiterals name="VALIDATION_ON">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="all MessageInstances are validated by the MessageTransportSystem"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="VALIDATION_OFF" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="MessageInstances are not validated by the MessageTransportSystem"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessageValidationResults">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, specifying the behaviour of the MessageTransportSystem as a result of MessageValidation"/>
+    </eAnnotations>
+    <eLiterals name="REJECT">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="invalid messages cause a rejection TransportMessage to be sent to the sending MessagingEndpoint, and the invalid MessageInstance is not delivered to any other MessagingEndpoint. Valid messages are delivered to their destinations and marked as valid in the TransportMessage"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="REJECT_AND_DELIVER" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="invalid messages must cause a rejection TransportMessage to be sent to the sending MessagingEndpoint, and the invalid MessageInstance is marked as invalid in the TransportMessage and delivered to its destination MessagingEndpoints. Valid messages are delivered to their destinations and marked as valid in the TransportMessage"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="DELIVER" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="invalid messages do not cause a rejection TransportMessage to be sent to the sending MessagingEndpoint. The invalid MessageInstance is delivered to its destination MessagingEndpoints. Valid messages are delivered to their destinations and marked as valid in the TransportMessage"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ReceiverAsynchronicity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, indicating whether a receiving MessagingEndpoint blocks the sending and receipt of other TransportMessages until it sends a response to this TransportMessage"/>
+    </eAnnotations>
+    <eLiterals name="ENDPOINT_SYNCHRONOUS">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="ENDPOINT_SYNCHRONOUS"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="CONVERSATION_SYNCHRONOUS" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The receiving MessagingEndpoint blocks the sending and receipt of other TransportMessages within the conversation, in which the TransportMessage was sent, while waiting for a response to this sent TransportMessage"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="ASYNCHRONOUS" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The receiving MessagingEndpoint must not block the receipt or processing of other TransportMessages while processing the current TransportMessage"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SenderAsynchronicity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="characteristic from the MessageTransport, indicating whether a sending Messaging Endpoint blocks after sending a TransportMessage to the MessageTransportSystem while waiting for a response from a MessagingEndpoint"/>
+    </eAnnotations>
+    <eLiterals name="ENDPOINT_SYNCHRONOUS">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The sending MessagingEndpoint blocks the sending and receipt of other TransportMessages while waiting for a response to the sent TransportMessage."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="CONVERSATION_SYNCHRONOUS" value="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The sending MessagingEndpoint blocks the sending and receipt of other TransportMessages within the conversation, in which the TransportMessage was sent, while waiting for a response to this sent TransportMessage."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="ASYNCHRONOUS" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The sending MessagingEndpoint shall not block the sending or receipt of other TransportMessages while waiting for a response to the sent TransportMessage."/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageDefinitionIdentifier" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Unique identification of a MessageDefinition within the ISO 20022 namespace, identifying the BusinessArea to which the MessageDefinition belongs, the Message Functionality it covers, its flavour and its version"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="businessArea" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="part of a MessageDefinitionIdentifier describing the BusinessArea to which the MessageDefinition using this MessageDefinitionIdentifier belongs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageFunctionality" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="function and purpose for which a MessageInstance described by a MessageDefinition can be used"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flavour" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="a variation of a messageFunctionality, whereby MessageDefinitions that are based on this MessageDefinition are compliant to the MessageDefinition from which this MessageDefinition is derived."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="identifies the version of the MessageDefinition"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Conversation" eSuperTypes="#//ModelEntity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="exchange of one or more MessageInstances amongst MessagingEndpoints"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageAssociationEnd" eSuperTypes="#//MessageElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Kind of MessageElement that relates two MessageComponentTypes."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isComposite" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Indicates if the message element is a composite."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" ordered="false" lowerBound="1"
+        eType="#//MessageComponentType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The MessageComponentType which specifies the complex content model of a MessageAssociationEnd."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageAttribute" eSuperTypes="#//MessageElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Kind of MessageElement whose type is a DataType or a MessageComponentType"/>
+    </eAnnotations>
+    <eOperations name="MessageAttributeHasExactlyOneType" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A MessageAttribute must have exactly one of the following: simpleType and complexType&#xD;&#xA;complexType->size() + simpleType->size()  = 1"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simpleType" ordered="false"
+        eType="#//DataType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the simple content model of a MessageAttribute when it is expressed using a DataType"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="complexType" ordered="false"
+        eType="#//MessageComponentType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the complex content model of a MessageAttribute when it is expressed using a MessageComponentType"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessAttribute" eSuperTypes="#//BusinessElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A BusinessElement, typed by a BusinessComponent or a DataType (contrary to a BusinessAssociationEnd, which is always typed by another BusinessComponent)"/>
+    </eAnnotations>
+    <eOperations name="BusinessAttributeHasExactlyOneType" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A BusinessAttribute must have exactly one of the following: simpleType and complexType.&#xD;&#xA;complexType->size() + simpleType->size()  = 1"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eOperations name="NoDerivingCodeSetType" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Deriving Code Sets may only be used to type MessageAttributes.  Therefore, a BusinessAttribute may not be typed by a Deriving CodeSet.&#xD;&#xA;simpleType.oclIsKindOf(CodeSet) implies simpleType.oclAsType(CodeSet).trace->isEmpty()"/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simpleType" ordered="false"
+        eType="#//DataType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Expresses that the content model of a BusinessAttribute may be specified by a type from the XSD type library or a derived datatype."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="complexType" ordered="false"
+        eType="#//BusinessComponent">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The BusinessComponent that describes the complex content model of the BusinessAttrribute."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//String">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A finite set of characters."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="String" eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'string', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minLength" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The minimum number of units of characters."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLength" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The number of units of characters."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The number of units of characters."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A constraint on the value space of a datatype which is achieved by constraining the lexical space to literals which match a specific pattern."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IdentifierSet" eSuperTypes="#//String">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Set of values whereby each value distinguishes uniquely one instance of an object within an identification scheme from all other instances of the objects within the same scheme."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="identificationScheme" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Uniquely identifies a set of identifiers through a Uniform Resource Identifier (URI)."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Indicator" eSuperTypes="#//Boolean">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A list of exactly two mutually exclusive values that express the only two possible states of an instance of an object."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="meaningWhenTrue" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Provides the semantic meaning when the Indicator is set to true."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="meaningWhenFalse" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Provides the semantic meaning when the Indicator is set to false."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Boolean" eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'boolean', as specified by W3C Recommendation XML Schema Part 2: Datatypes"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A constraint on the value space of a datatype which is achieved by constraining the lexical space to literals which match a specific pattern."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rate" eSuperTypes="#//Decimal">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A quantity or amount measured with respect to another measured quantity or amount"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseValue" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the ratio between the base value and the actual value"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUnitCode" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies unit code required to qualify this rate"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Decimal" eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'decimal', as specified by W3C Recommendation XML Schema Part 2: Datatypes"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minInclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the lowest value in the allowed set of values"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minExclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the lowest but one value in the allowed set of values"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxInclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the highest value in the allowed set of values"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxExclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the highest but one value in the allowed set of values"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalDigits" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the maximum number of allowed digits in a Decimal number"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fractionDigits" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the fractional part of a Decimal number"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A constraint on the value space of a datatype which is achieved by constraining the lexical space to literals which match a specific pattern."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalSchema" eSuperTypes="#//MessageComponentType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Reusable Dictionary Item that allows referring to a structure defined outside of the ISO 20022 MessageDefinition."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="namespaceList" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Identifies the description of the content model of an ExternalSchema, through (a set of) URI."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processContent" ordered="false"
+        lowerBound="1" eType="#//ProcessContent">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies whether it is required for the content model of the ExternalSchema to be validated."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ProcessContent">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="specifies how a contentmodel must be validated"/>
+    </eAnnotations>
+    <eLiterals name="LAX" literal="lax">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the contentmodel must be validated on a can-do basis"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="SKIP" value="1" literal="skip">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the contentmodel must not be validated"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="STRICT" value="2" literal="strict">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the contentmodel must be validated against its specification"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Quantity" eSuperTypes="#//Decimal">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A counted number of non-monetary units possibly including fractions"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unitCode" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="qualifies the value of a Quantity"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Code" eSuperTypes="#//RepositoryConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A character string (letters, figures or symbols) that for brevity and/or language independence may be used to represent or replace a definitive value or text of an attribute."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="codeName" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Provides the full, non-abbreviated name of the Code"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" ordered="false"
+        lowerBound="1" eType="#//CodeSet" eOpposite="#//CodeSet/code">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Direct reference to the CodeSet owning this Code."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeSet" eSuperTypes="#//String">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Set of Codes grouped together to characterize all the values of an attribute."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trace" ordered="false"
+        eType="#//CodeSet" eOpposite="#//CodeSet/derivation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The CodeSet that this CodesSet is derived from."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivation" ordered="false"
+        upperBound="-1" eType="#//CodeSet" eOpposite="#//CodeSet/trace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The CodeSets which are derived from this CodeSet."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+        <details key="description" value="Traces are represented as a direct reference to the traced-to repository concept instead of using an intermediate Trace meta class"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="identificationScheme" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Uniquely identifies a set of Codes through a Uniform Resource Identifier (URI)."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="code" upperBound="-1" eType="#//Code"
+        containment="true" eOpposite="#//Code/owner">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A set of Codes belonging to the same CodeSet"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Amount" eSuperTypes="#//Decimal">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A number of monetary units specified in a currency where the unit of currency is explicit or implied."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="currencyIdentifierSet"
+        ordered="false" eType="#//DataType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="specifies the allowed currencies that can be used to qualify this amount"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChoiceComponent" eSuperTypes="#//MessageElementContainer">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="re-usable Dictionary Item that is a building block for assembling MessageDefinitions, composed of a choice of MessageElements"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="The property element is moved from MessageComponentType to the new abstract Meta Class MessageElementContainer so that only such MessageElementContainer may own MessageElements. This MessageElementContainer class is the super class of MessageComponent and ChoiceComponent. As such, it is constrained directly in the MOF MetaClass structure that an ExternalSchema may not contain MessageElement; instead of constraining this with an OCL rule."/>
+    </eAnnotations>
+    <eOperations name="AtLeastOneProperty" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A MessageComponent or ChoiceComponent must have at least one MessageElement&#xD;&#xA;messageElement->notEmpty( ) "/>
+      </eAnnotations>
+      <eParameters name="context" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap"/>
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Namespace">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Enumeration of the possible Namespace values that can be used by a User Defined."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="LEGACY"/>
+    </eAnnotations>
+    <eLiterals name="any" literal="##any">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Maps to the W3C Schema value &quot;##any&quot;."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="other" value="1" literal="##other">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Maps to the W3C Schema value &quot;##other&quot;."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="list" value="2" literal="list">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Indicates that the value of the property &quot;namespace&quot; must be retrieved from the property &quot;namespaceList&quot;."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractDateTimeConcept" abstract="true"
+      eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract definition of a data type whose properties are common to all kinds of time-related concepts."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="This abstract meta class factorises the properties common to date and time meta classes."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minInclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the lowest value in the allowed set of values"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minExclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the lowest but one value in the allowed set of values"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxInclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the highest value in the allowed set of values"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxExclusive" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the highest but one value in the allowed set of values"/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A constraint on the value space of a datatype which is achieved by constraining the lexical space to literals which match a specific pattern."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EndPointCategory" eSuperTypes="#//TopLevelDictionaryEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Collection of MessageComponents that define the endpoints for a given category."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="RepositoryManagement"/>
+      <details key="description" value="Identifies highly reusable structures and allows reducing the size of the documentation."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endPoints" ordered="false"
+        upperBound="-1" eType="#//MessageElementContainer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="MessageComponents that are considered to be end points."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="RepositoryManagement"/>
+        <details key="description" value="Identifies highly reusable structures and allows reducing the size of the documentation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Binary" eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'base64Binary', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minLength" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the minimum number of units of characters"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLength" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the maximum number of units of characters"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="the number of units of characters"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pattern" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A constraint on the value space of a datatype which is achieved by constraining the lexical space to literals which match a specific pattern."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Date" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'date', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DateTime" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'dateTime', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Day" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'gDay', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Duration" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'duration', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Month" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'gMonth', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MonthDay" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'gMonthDay', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Time" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'time', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Year" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'gYear', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="YearMonth" eSuperTypes="#//AbstractDateTimeConcept">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Any set of values drawn from the value space of 'gYearMonth', as specified by W3C Recommendation XML Schema Part 2: Datatypes."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_CONSTRAINT"/>
+      <details key="description" value="Prefixed with XSD to avoid confusion with base types available in programming languages: e.g. java.lang.String."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserDefined" eSuperTypes="#//MessageComponentType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Type which allows referring to a structure defined outside of the ISO20022 MessageDefinition."/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="LEGACY"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="namespace" ordered="false"
+        lowerBound="1" eType="#//Namespace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The URN namespace of the referenced external structure definition. The allowed values are: ##any, ##other or list. When equal to &quot;list&quot;, then the value of the property &quot;namespaceList&quot; must be filled."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="namespaceList" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A list of URN namespaces."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="processContents" ordered="false"
+        lowerBound="1" eType="#//ProcessContent">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Indicates the kind of validation which must be performed on the external structure."/>
+      </eAnnotations>
+      <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+        <details key="basis" value="LEGACY"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndustryMessageSet" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="set of non ISO 20022 compliant messages that is defined and used by (a part of) the (financial) industry"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvergenceDocumentation" eSuperTypes="#//TopLevelCatalogueEntry">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="documentation set showing relations between ISO 20022 MessageDefinitions, MessageComponentTypes, MessageElements, BusinessComponents, BusinessAssociations and/or BusinessElements and items defined in other Industry MessageSets"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISO15022MessageSet" eSuperTypes="#//IndustryMessageSet">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="industryMessageSet constructed according to the rules defined in ISO 15022-1 and ISO 15022-2 and that is stored in the ISO 15022 Catalogue of Messages"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SchemaType" eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Meta class for represensting XML Schema DataTypes"/>
+    </eAnnotations>
+    <eAnnotations source="urn:iso:std:iso:20022:2013:ecore:extension">
+      <details key="basis" value="IMPLEMENTATION_ENHANCEMENT"/>
+      <details key="description" value="Meta class for represensting XML Schema DataTypes"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false" lowerBound="1"
+        eType="#//SchemaTypeKind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SchemaTypeKind">
+    <eLiterals name="anySimpleType" literal="anySimpleType"/>
+    <eLiterals name="anyURI" value="1" literal="anyURI"/>
+    <eLiterals name="base64Binary" value="2" literal="base64Binary"/>
+    <eLiterals name="boolean" value="3" literal="boolean"/>
+    <eLiterals name="byte" value="4" literal="byte"/>
+    <eLiterals name="date" value="5" literal="date"/>
+    <eLiterals name="dateTime" value="6" literal="dateTime"/>
+    <eLiterals name="decimal" value="7" literal="decimal"/>
+    <eLiterals name="double" value="8" literal="double"/>
+    <eLiterals name="duration" value="9" literal="duration"/>
+    <eLiterals name="ENTITIES" value="10" literal="ENTITIES"/>
+    <eLiterals name="ENTITY" value="11" literal="ENTITY"/>
+    <eLiterals name="float" value="12" literal="float"/>
+    <eLiterals name="gDay" value="13" literal="gDay"/>
+    <eLiterals name="gMonth" value="14" literal="gMonth"/>
+    <eLiterals name="gMonthDay" value="15" literal="gMonthDay"/>
+    <eLiterals name="gYear" value="16" literal="gYear"/>
+    <eLiterals name="gYearMonth" value="17" literal="gYearMonth"/>
+    <eLiterals name="hexBinary" value="18" literal="hexBinary"/>
+    <eLiterals name="ID" value="19" literal="ID"/>
+    <eLiterals name="IDREF" value="20" literal="IDREF"/>
+    <eLiterals name="IDREFS" value="21" literal="IDREFS"/>
+    <eLiterals name="int" value="22" literal="int"/>
+    <eLiterals name="integer" value="23" literal="integer"/>
+    <eLiterals name="language" value="24" literal="language"/>
+    <eLiterals name="long" value="25" literal="long"/>
+    <eLiterals name="Name" value="26" literal="Name"/>
+    <eLiterals name="NCName" value="27" literal="NCName"/>
+    <eLiterals name="negativeInteger" value="28" literal="negativeInteger"/>
+    <eLiterals name="NMTOKEN" value="29" literal="NMTOKEN"/>
+    <eLiterals name="NMTOKENS" value="30" literal="NMTOKENS"/>
+    <eLiterals name="nonNegativeInteger" value="31" literal="nonNegativeInteger"/>
+    <eLiterals name="nonPositiveInteger" value="32" literal="nonPositiveInteger"/>
+    <eLiterals name="normalizedString" value="33" literal="normalizedString"/>
+    <eLiterals name="positiveInteger" value="34" literal="positiveInteger"/>
+    <eLiterals name="QName" value="35" literal="QName"/>
+    <eLiterals name="short" value="36" literal="short"/>
+    <eLiterals name="string" value="37" literal="string"/>
+    <eLiterals name="time" value="38" literal="time"/>
+    <eLiterals name="token" value="39" literal="token"/>
+    <eLiterals name="unsignedByte" value="40" literal="unsignedByte"/>
+    <eLiterals name="unsignedInt" value="41" literal="unsignedInt"/>
+    <eLiterals name="unsignedLong" value="42" literal="unsignedLong"/>
+    <eLiterals name="unsignedShort" value="43" literal="unsignedShort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ISO20022Version">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Enumeration of the version of ISO20022"/>
+    </eAnnotations>
+    <eLiterals name="_2004" literal="2004">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Version 2004 of ISO20022"/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="_2013" value="1" literal="2013">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Version 2013 of ISO20022"/>
+      </eAnnotations>
+    </eLiterals>
+  </eClassifiers>
+</ecore:EPackage>

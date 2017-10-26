@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/ISO20022Generated/src" modelPluginID="ISO20022Generated"
+    modelName="ISO20022" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>ISO20022.ecore</foreignModel>
+  <genPackages prefix="Iso20022" disposableProviderFactory="true" loadInitialization="true"
+      literalsInterface="false" ecorePackage="ISO20022.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//RegistrationStatus">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//RegistrationStatus/PROVISIONALLY_REGISTERED"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//RegistrationStatus/REGISTERED"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//RegistrationStatus/OBSOLETE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//Aggregation">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Aggregation/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Aggregation/COMPOSITE"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Aggregation/SHARED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//DeliveryAssurance">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//DeliveryAssurance/AT_LEAST_ONCE"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//DeliveryAssurance/EXACTLY_ONCE"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//DeliveryAssurance/AT_MOST_ONCE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//Durability">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Durability/DURABLE"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Durability/PERSISTENT"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Durability/TRANSIENT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//MessageCasting">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageCasting/UNICAST"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageCasting/MULTICAST"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageCasting/BROADCAST"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageCasting/ANYCAST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//MessageDeliveryOrder">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageDeliveryOrder/EXPECTED_CAUSAL_ORDER"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageDeliveryOrder/FIFO_ORDERED"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageDeliveryOrder/UNORDERED"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//MessageValidationLevel">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/NO_VALIDATION"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/SYNTAX_VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/SCHEMA_VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/MESSAGE_VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/RULE_VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/MARKET_PRACTICE_VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/BUSINESS_PROCESS_VALID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationLevel/COMPLETELY_VALID"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//MessageValidationOnOff">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationOnOff/VALIDATION_ON"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationOnOff/VALIDATION_OFF"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//MessageValidationResults">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationResults/REJECT"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationResults/REJECT_AND_DELIVER"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//MessageValidationResults/DELIVER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//ReceiverAsynchronicity">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ReceiverAsynchronicity/ENDPOINT_SYNCHRONOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ReceiverAsynchronicity/CONVERSATION_SYNCHRONOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ReceiverAsynchronicity/ASYNCHRONOUS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//SenderAsynchronicity">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SenderAsynchronicity/ENDPOINT_SYNCHRONOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SenderAsynchronicity/CONVERSATION_SYNCHRONOUS"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SenderAsynchronicity/ASYNCHRONOUS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//ProcessContent">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ProcessContent/LAX"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ProcessContent/SKIP"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ProcessContent/STRICT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//Namespace">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Namespace/any"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Namespace/other"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//Namespace/list"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//SchemaTypeKind">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/anySimpleType"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/anyURI"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/base64Binary"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/byte"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/date"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/dateTime"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/decimal"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/double"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/duration"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/ENTITIES"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/ENTITY"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/float"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/gDay"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/gMonth"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/gMonthDay"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/gYear"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/gYearMonth"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/hexBinary"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/ID"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/IDREF"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/IDREFS"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/int"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/integer"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/language"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/long"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/Name"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/NCName"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/negativeInteger"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/NMTOKEN"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/NMTOKENS"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/nonNegativeInteger"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/nonPositiveInteger"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/normalizedString"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/positiveInteger"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/QName"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/short"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/string"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/time"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/token"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/unsignedByte"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/unsignedInt"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/unsignedLong"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//SchemaTypeKind/unsignedShort"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ISO20022.ecore#//ISO20022Version">
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ISO20022Version/_2004"/>
+      <genEnumLiterals ecoreEnumLiteral="ISO20022.ecore#//ISO20022Version/_2013"/>
+    </genEnums>
+    <genClasses ecoreClass="ISO20022.ecore#//Address">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Address/broadCastList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Address/endpoint"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//ModelEntity">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//ModelEntity/nextVersions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//ModelEntity/previousVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//ModelEntity/objectIdentifier"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BroadcastList">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BroadcastList/address"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessagingEndpoint">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//MessagingEndpoint/transportSystem"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessagingEndpoint/receivedMessage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessagingEndpoint/sentMessage"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessagingEndpoint/location"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageTransportSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageTransportSystem/endpoint"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//TransportMessage">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//TransportMessage/sender"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//TransportMessage/messageInstance"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//TransportMessage/receiver"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//TransportMessage/sameMessageTransportSystem">
+        <genParameters ecoreParameter="ISO20022.ecore#//TransportMessage/sameMessageTransportSystem/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//TransportMessage/sameMessageTransportSystem/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageInstance">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageInstance/specification"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageInstance/transportMessage"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//SyntaxMessageScheme">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//SyntaxMessageScheme/messageDefinitionTrace"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//TopLevelCatalogueEntry">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//TopLevelCatalogueEntry/businessProcessCatalogue"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//RepositoryConcept">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//RepositoryConcept/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//RepositoryConcept/definition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//RepositoryConcept/semanticMarkup"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//RepositoryConcept/doclet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//RepositoryConcept/example"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//RepositoryConcept/constraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//RepositoryConcept/registrationStatus"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//RepositoryConcept/removalDate"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//RepositoryConcept/RemovalDateRegistrationStatus">
+        <genParameters ecoreParameter="ISO20022.ecore#//RepositoryConcept/RemovalDateRegistrationStatus/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//RepositoryConcept/RemovalDateRegistrationStatus/diagnostics"/>
+      </genOperations>
+      <genOperations ecoreOperation="ISO20022.ecore#//RepositoryConcept/NameFirstLetterUppercase">
+        <genParameters ecoreParameter="ISO20022.ecore#//RepositoryConcept/NameFirstLetterUppercase/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//RepositoryConcept/NameFirstLetterUppercase/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//SemanticMarkup">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//SemanticMarkup/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//SemanticMarkup/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//SemanticMarkupElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//SemanticMarkupElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//SemanticMarkupElement/value"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Doclet">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Doclet/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Doclet/content"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Constraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Constraint/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Constraint/expressionLanguage"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Constraint/owner"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessProcessCatalogue">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcessCatalogue/repository"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcessCatalogue/topLevelCatalogueEntry"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessProcessCatalogue/EntriesHaveUniqueName">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessProcessCatalogue/EntriesHaveUniqueName/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessProcessCatalogue/EntriesHaveUniqueName/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Repository">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Repository/dataDictionary"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Repository/businessProcessCatalogue"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//DataDictionary">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//DataDictionary/topLevelDictionaryEntry"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//DataDictionary/repository"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//DataDictionary/EntriesHaveUniqueName">
+        <genParameters ecoreParameter="ISO20022.ecore#//DataDictionary/EntriesHaveUniqueName/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//DataDictionary/EntriesHaveUniqueName/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//TopLevelDictionaryEntry">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//TopLevelDictionaryEntry/dataDictionary"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageDefinition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/messageSet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinition/xmlName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinition/xmlTag"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/businessArea"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/xors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinition/rootElement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/messageBuildingBlock"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/choreography"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/trace"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/messageDefinitionIdentifier"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageDefinition/derivation"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageDefinition/BusinessAreaNameMatch">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageDefinition/BusinessAreaNameMatch/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageDefinition/BusinessAreaNameMatch/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//RepositoryType"/>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageSet">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageSet/generatedSyntax"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageSet/validEncoding"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageSet/messageDefinition"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageSet/GeneratedSyntaxDerivation">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageSet/GeneratedSyntaxDerivation/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageSet/GeneratedSyntaxDerivation/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Syntax">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Syntax/possibleEncodings"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Syntax/generatedFor"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//Syntax/GeneratedForDerivation">
+        <genParameters ecoreParameter="ISO20022.ecore#//Syntax/GeneratedForDerivation/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//Syntax/GeneratedForDerivation/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Encoding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Encoding/messageSet"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Encoding/syntax"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessArea">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//BusinessArea/code"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessArea/messageDefinition"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Xor">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Xor/impactedElements"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Xor/messageComponent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Xor/impactedMessageBuildingBlocks"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Xor/messageDefinition"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//MessageElement">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageElement/isTechnical"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageElement/businessComponentTrace"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageElement/businessElementTrace"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageElement/componentContext"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageElement/isDerived"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageElement/NoMoreThanOneTrace">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElement/NoMoreThanOneTrace/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElement/NoMoreThanOneTrace/diagnostics"/>
+      </genOperations>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageElement/CardinalityAlignment">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElement/CardinalityAlignment/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElement/CardinalityAlignment/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//MessageConstruct">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageConstruct/xmlTag"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageConstruct/xmlMemberType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//Construct">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Construct/memberType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//MultiplicityEntity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MultiplicityEntity/maxOccurs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MultiplicityEntity/minOccurs"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//LogicalType"/>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//MessageConcept"/>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessComponent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessComponent/subType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessComponent/superType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessComponent/element"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessComponent/derivationComponent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessComponent/associationDomain"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessComponent/derivationElement"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessComponent/BusinessElementsHaveUniqueNames">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessComponent/BusinessElementsHaveUniqueNames/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessComponent/BusinessElementsHaveUniqueNames/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//BusinessElementType"/>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//BusinessConcept"/>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//BusinessElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//BusinessElement/isDerived"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessElement/derivation"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessElement/businessElementType"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessElement/elementContext"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//MessageComponentType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageComponentType/messageBuildingBlock"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageComponentType/isTechnical"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageComponentType/trace"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageBuildingBlock">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageBuildingBlock/simpleType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageBuildingBlock/complexType"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageBuildingBlock/MessageBuildingBlockHasExactlyOneType">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageBuildingBlock/MessageBuildingBlockHasExactlyOneType/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageBuildingBlock/MessageBuildingBlockHasExactlyOneType/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//DataType"/>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessAssociationEnd">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessAssociationEnd/opposite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//BusinessAssociationEnd/aggregation"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessAssociationEnd/type"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessAssociationEnd/AtMostOneAggregatedEnd">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAssociationEnd/AtMostOneAggregatedEnd/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAssociationEnd/AtMostOneAggregatedEnd/diagnostics"/>
+      </genOperations>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessAssociationEnd/ContextConsistentWithType">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAssociationEnd/ContextConsistentWithType/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAssociationEnd/ContextConsistentWithType/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//MessageElementContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageElementContainer/messageElement"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageElementContainer/MessageElementsHaveUniqueNames">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElementContainer/MessageElementsHaveUniqueNames/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElementContainer/MessageElementsHaveUniqueNames/diagnostics"/>
+      </genOperations>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageElementContainer/technicalElement">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElementContainer/technicalElement/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageElementContainer/technicalElement/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageComponent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageComponent/xors"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageChoreography">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageChoreography/businessTransactionTrace"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageChoreography/messageDefinition"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessTransaction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/businessProcessTrace"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/participant"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/transmission"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/messageTransportMode"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/subTransaction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/parentTransaction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessTransaction/trace"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessTransaction/MessageTransmissionsHaveUniqueNames">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessTransaction/MessageTransmissionsHaveUniqueNames/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessTransaction/MessageTransmissionsHaveUniqueNames/diagnostics"/>
+      </genOperations>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessTransaction/ParticipantsHaveUniqueNames">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessTransaction/ParticipantsHaveUniqueNames/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessTransaction/ParticipantsHaveUniqueNames/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessProcess">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcess/extender"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcess/extended"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcess/included"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcess/includer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcess/businessRole"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessProcess/businessProcessTrace"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessRole">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessRole/businessRoleTrace"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessRole/businessProcess"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Participant">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Participant/businessTransaction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Participant/receives"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Participant/sends"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Participant/businessRoleTrace"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Receive">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Receive/messageTransmission"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Receive/receiver"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageTransmission">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageTransmission/businessTransaction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageTransmission/derivation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransmission/messageTypeDescription"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageTransmission/send"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageTransmission/receive"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Send">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Send/sender"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Send/messageTransmission"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageTransportMode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/boundedCommunicationDelay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/maximumClockVariation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/maximumMessageSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageDeliveryWindow"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageSendingWindow"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/deliveryAssurance"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/durability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageCasting"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageDeliveryOrder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageValidationLevel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageValidationOnOff"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/messageValidationResults"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/receiverAsynchronicity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageTransportMode/senderAsynchronicity"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageTransportMode/businessTransaction"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageDefinitionIdentifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinitionIdentifier/businessArea"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinitionIdentifier/messageFunctionality"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinitionIdentifier/flavour"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageDefinitionIdentifier/version"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Conversation"/>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageAssociationEnd">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//MessageAssociationEnd/isComposite"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageAssociationEnd/type"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//MessageAttribute">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageAttribute/simpleType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//MessageAttribute/complexType"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//MessageAttribute/MessageAttributeHasExactlyOneType">
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageAttribute/MessageAttributeHasExactlyOneType/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//MessageAttribute/MessageAttributeHasExactlyOneType/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//BusinessAttribute">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessAttribute/simpleType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//BusinessAttribute/complexType"/>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessAttribute/BusinessAttributeHasExactlyOneType">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAttribute/BusinessAttributeHasExactlyOneType/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAttribute/BusinessAttributeHasExactlyOneType/diagnostics"/>
+      </genOperations>
+      <genOperations ecoreOperation="ISO20022.ecore#//BusinessAttribute/NoDerivingCodeSetType">
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAttribute/NoDerivingCodeSetType/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//BusinessAttribute/NoDerivingCodeSetType/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Text"/>
+    <genClasses ecoreClass="ISO20022.ecore#//String">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//String/minLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//String/maxLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//String/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//String/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//IdentifierSet">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//IdentifierSet/identificationScheme"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Indicator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Indicator/meaningWhenTrue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Indicator/meaningWhenFalse"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Boolean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Boolean/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Rate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Rate/baseValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Rate/baseUnitCode"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Decimal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/minInclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/minExclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/maxInclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/maxExclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/totalDigits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/fractionDigits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Decimal/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//ExternalSchema">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//ExternalSchema/namespaceList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//ExternalSchema/processContent"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Quantity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Quantity/unitCode"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Code">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Code/codeName"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ISO20022.ecore#//Code/owner"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//CodeSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//CodeSet/trace"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//CodeSet/derivation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//CodeSet/identificationScheme"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISO20022.ecore#//CodeSet/code"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Amount">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//Amount/currencyIdentifierSet"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//ChoiceComponent">
+      <genOperations ecoreOperation="ISO20022.ecore#//ChoiceComponent/AtLeastOneProperty">
+        <genParameters ecoreParameter="ISO20022.ecore#//ChoiceComponent/AtLeastOneProperty/context"/>
+        <genParameters ecoreParameter="ISO20022.ecore#//ChoiceComponent/AtLeastOneProperty/diagnostics"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="ISO20022.ecore#//AbstractDateTimeConcept">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//AbstractDateTimeConcept/minInclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//AbstractDateTimeConcept/minExclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//AbstractDateTimeConcept/maxInclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//AbstractDateTimeConcept/maxExclusive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//AbstractDateTimeConcept/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//EndPointCategory">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISO20022.ecore#//EndPointCategory/endPoints"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Binary">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Binary/minLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Binary/maxLength"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Binary/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//Binary/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//Date"/>
+    <genClasses ecoreClass="ISO20022.ecore#//DateTime"/>
+    <genClasses ecoreClass="ISO20022.ecore#//Day"/>
+    <genClasses ecoreClass="ISO20022.ecore#//Duration"/>
+    <genClasses ecoreClass="ISO20022.ecore#//Month"/>
+    <genClasses ecoreClass="ISO20022.ecore#//MonthDay"/>
+    <genClasses ecoreClass="ISO20022.ecore#//Time"/>
+    <genClasses ecoreClass="ISO20022.ecore#//Year"/>
+    <genClasses ecoreClass="ISO20022.ecore#//YearMonth"/>
+    <genClasses ecoreClass="ISO20022.ecore#//UserDefined">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//UserDefined/namespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//UserDefined/namespaceList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//UserDefined/processContents"/>
+    </genClasses>
+    <genClasses ecoreClass="ISO20022.ecore#//IndustryMessageSet"/>
+    <genClasses ecoreClass="ISO20022.ecore#//ConvergenceDocumentation"/>
+    <genClasses ecoreClass="ISO20022.ecore#//ISO15022MessageSet"/>
+    <genClasses ecoreClass="ISO20022.ecore#//SchemaType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISO20022.ecore#//SchemaType/kind"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,10 @@
+/home/jamie/workspaces/Corda/CordaISO20022/src/_mains/ISO20022SimpleImporter_Main.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/model/iso20022/util/ISO20022Helper.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/util/UnZipIt.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/importer/PerformantXMIResourceFactoryImpl.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/util/EMFHelper.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/importer/ModelLoader.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/iso20022/importer/ISO20022SimpleImporter.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/importer/IntrinsicIDCachingXMLResourceFactoryImpl.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/util/FileHelper.java
+/home/jamie/workspaces/Corda/CordaISO20022/src/com/swift/standards/lab/common/util/StringHelper.java
