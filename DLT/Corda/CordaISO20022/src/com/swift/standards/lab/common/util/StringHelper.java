@@ -7,6 +7,8 @@ import javax.lang.model.SourceVersion;
 
 import org.eclipse.emf.ecore.EObject;
 
+import iso20022.RepositoryConcept;
+
 /**
  * 
  * This sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the 
@@ -141,6 +143,31 @@ public class StringHelper {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date now = new Date();
 		return format.format(now);
+	}
+	
+	public static final String disclaimer = "\r\nThis sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the "
+					+ "\r\npublic ISO 20022 e-Repository, and to generate artefacts such as Java code from it."
+					+ "\r\n\r\nIt is shared without warranty expressed or implied for the purpose of starting a conversation with the Corda "
+					+ "\r\nopen source community about the best way to deploy ISO 20022’s freely-available, globally-agreed repository of "
+					+ "\r\nfinancial transaction standards to the Corda ecosystem."
+					+ "\r\n\r\nNeither SWIFT nor the author/s assume any responsibility or liability for any losses that may occur through"
+					+ "\r\nthe mis/use of this code or anything that is derived or generated from it."
+					+ "\r\n\r\nThis code is a proof of concept and must not be used in production. "
+					+ "\r\n\r\nThis code may be shared freely but must retain this disclaimer.";
+
+	
+	public static String getClassJavadoc(RepositoryConcept rc, String type, String modelName) {
+		return "CordApp " + type + " Object representing the ISO 20022 " 
+				+ EMFHelper.getSimplifiedClassName(rc) + " named \"" + rc.getName() 
+				+ "\"\r\n\r\n\tISO 20022 defines this concept as:\r\n\t\"" + rc.getDefinition() + "\""
+				+ "\r\n\r\n\tThis code was generated on " + StringHelper.now() + " from the ISO 20022 e-Repository named " + modelName + " available from https://www.iso20022.org/e_dictionary.page"
+				+ "\r\n\r\n" + disclaimer + "\r\n\r\n";
+	}
+
+	public static String getFieldJavadoc(RepositoryConcept rc) {
+		return "Prototype CordApp State Field representing the ISO 20022 " 
+					+ EMFHelper.getSimplifiedClassName(rc) + " named \"" + rc.getName() + "\"."
+					+ "\r\n\r\n\tISO 20022 defines this concept as:\r\n\t\"" + rc.getDefinition() + "\"";
 	}
 
 }

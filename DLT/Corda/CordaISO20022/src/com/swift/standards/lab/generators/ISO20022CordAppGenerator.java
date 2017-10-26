@@ -52,31 +52,23 @@ import net.corda.core.contracts.ContractState;
 
 /**
  * 
+ * Principal worker class that does the heavy lifting to generate Java CordApp objects from the ISO 20022 e-Repository. 
+ * <p>
  * This sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the 
  * public ISO 20022 e-Repository, and to generate artefacts such as Java code from it.
- * 
+ * <p>
  * It is shared without warranty expressed or implied for the purpose of starting a conversation with the Corda 
  * open source community about the best way to deploy ISO 20022’s freely-available, globally-agreed repository of 
  * financial transaction standards to the Corda ecosystem.
- * 
+ * <p>
  * Neither SWIFT nor the author/s assume any responsibility or liability for any losses that may occur through
  * the mis/use of this code or anything that is derived or generated from it.
- * 
+ * <p>
  * This code must not be used in production and if shared must retain this disclaimer.
  *
  */
 
 public class ISO20022CordAppGenerator {
-
-	final String disclaimer = "\r\nThis sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the "
-			+ "\r\npublic ISO 20022 e-Repository, and to generate artefacts such as Java code from it."
-			+ "\r\n\r\nIt is shared without warranty expressed or implied for the purpose of starting a conversation with the Corda "
-			+ "\r\nopen source community about the best way to deploy ISO 20022’s freely-available, globally-agreed repository of "
-			+ "\r\nfinancial transaction standards to the Corda ecosystem."
-			+ "\r\n\r\nNeither SWIFT nor the author/s assume any responsibility or liability for any losses that may occur through"
-			+ "\r\nthe mis/use of this code or anything that is derived or generated from it."
-			+ "\r\n\r\nThis code is a proof of concept and must not be used in production. "
-			+ "\r\n\r\nThis code may be shared freely but must retain this disclaimer.";
 
 	final String URIBASE = "org.iso.tc68.iso20022";
 	
@@ -86,6 +78,11 @@ public class ISO20022CordAppGenerator {
 	
 	final boolean useXMLSchemaNames;
 	
+	/**
+	 * Because ISO 20022 components and Components and DataTypes are re-used, we use this HashMap to keep track of
+	 * our classes as we create them. Avoids overhead of creating duplicates and allows them to be easily found 
+	 * on demand by fully qualified class name.
+	 */
 	HashMap<String, FieldHolderSource<?>>allClassesByQualifiedName = new HashMap<String, FieldHolderSource<?>>();
 	String packageRoot;
 	String summary;
@@ -107,6 +104,33 @@ public class ISO20022CordAppGenerator {
 		this(importer, useXMLSchemaNames, null, importer.getOutputDirectory() + "/src/");
 	}
 	
+	/**
+	 * 
+	 * @param importer A ModelLoader that contains an EMF Model loaded from the ISO 20022 e-Repository
+	 * @param useXMLSchemaNames Generate code with ISO 20022 XML Schema-compliant Shortnames (based off the xmlTag attribute) 
+	 * 							or using the full ISO 20022 CamelCaseNames
+	 * 		useXMLSchemaNames = false : (Default) 
+	 *   		Generate code that uses the default human-readable ISO 20022 CamelCase Names 
+	 *   		for Messages, MessageAttributes, and MessageBuildingBlocks
+	 * 
+	 * 		useXMLSchemaNames = true : 
+	 * 	 		Generate code that uses the same shortnames that are found in the ISO 20022 XMLSchemas
+	 *   		This may be useful if you are developing or enriching legacy software components that 
+	 *   		were developed based on the published ISO 20022 XMLSchemas (using JAXB, etc)
+	 *   
+	 * @param toGenerate Names of all MessageDefinitions and/or Business/MessageComponents that you want to generate. 
+	 *  
+	 *  Examples:
+	 *  List<String> toGenerate = Arrays.asList("FIToFICustomerCreditTransferV06", "FIToFICustomerCreditTransferV06");
+	 *  List<String> toGenerate = Arrays.asList("DateTimePeriod", "Account");
+	 *  
+	 *  Notes:
+	 * 		All dependent Business/MessageComponents and DataTypes will also be generated.
+	 *  	toGenerate = null : (Default) Generate everything!
+	 *  
+	 * @param outputDirectory Where to write the generated classes (Default: an src subdirectory under the e-Repository path) 
+	 * 
+	 */
 	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames, List<String> toGenerate, String outputDirectory) {
 		this.model = importer;
 		this.useXMLSchemaNames = useXMLSchemaNames;
@@ -184,7 +208,7 @@ public class ISO20022CordAppGenerator {
 		if (rc instanceof BusinessConcept) return packageRoot + ".businesscomponents";
 		if (rc instanceof DataType) return packageRoot + ".datatypes" + "." + getDataTypeClassification((DataType)rc);
 		if (rc instanceof MessageDefinition) return packageRoot + ".messagedefinitions";
-		System.err.println("Wasn't expecting to be asked to getPackage() for this RepositoryType: " + rc);
+		System.err.println("I wasn't expecting to be asked to getPackage() for a " + rc + " RepositoryType! The generator currently only supports MessageDefinitions, BusinessComponents, MessageComponents, and DataTypes.");
 		return packageRoot + ".FIXME";
 	}
 
@@ -224,6 +248,31 @@ public class ISO20022CordAppGenerator {
 		return classification;
 	}
 
+	private JavaClassSource createClass(RepositoryConcept rc) {
+		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
+		String className = rc.getName();
+		if ("Contract".equals(className)) {
+			// TODO: This is a hack for the special case of "Contract" which is needed to avoid clash between
+			// net.corda.core.contracts.Contract and org.iso.tc68.iso20022._20170713_iso20022_2013_erepository.businesscomponents.Contract 
+			// There is probably a more elegant way to explicitly reference one of these classes instead of importing both, but haven't yet found it in Roaster
+			className += "_";
+		}
+		javaClass.setName(className).setPackage(getPackage(rc));
+	
+		javaClass.getJavaDoc().setFullText(StringHelper.getClassJavadoc(rc, "State", model.getModeFileName()));
+	
+		if (rc instanceof MessageComponentType) countMessageComponents++;
+		else if (rc instanceof BusinessComponent) countBusinessComponents++;
+		else if (rc instanceof MessageDefinition) countMessages++;
+		else if (rc instanceof DataType) countDataTypes++;
+		
+		// Add each newly created class to this HashMap so we can find it quickly by qualified name later
+		// Mainly to avoid the overhead of creating duplicates.
+		allClassesByQualifiedName.put(getQualifiedName(rc), javaClass);
+	
+		return javaClass;
+	}
+
 	private JavaClassSource createLogicalLevelClass(RepositoryConcept rc) {
 		if (allClassesByQualifiedName.get(getQualifiedName(rc)) != null) return (JavaClassSource)allClassesByQualifiedName.get(getQualifiedName(rc));
 		
@@ -239,12 +288,8 @@ public class ISO20022CordAppGenerator {
 		boolean first = true;
 		for (EObject c : rc.eContents()) {
 			String propertyType = "FIXME";
-			String def = "";
-			String name = "";
 			if (c instanceof Construct) {
 				RepositoryType t = ((Construct) c).getMemberType();
-				def = ((Construct) c).getDefinition();
-				name = ((Construct) c).getName();
 				propertyType = t.getName();
 				if (t instanceof DataType) {
 					if (t instanceof CodeSet) {
@@ -264,9 +309,7 @@ public class ISO20022CordAppGenerator {
 			}
 			String propertyName = StringHelper.getJavaIdentifierName(c, useXMLSchemaNames);
 			PropertySource<JavaClassSource> p = cl.addProperty(propertyType, propertyName);
-			p.getAccessor().getJavaDoc().setFullText("Prototype CordApp State Field representing the ISO 20022 " 
-					+ EMFHelper.getSimplifiedClassName(c) + " named \"" + name + "\"."
-					+ "\r\n\r\n\tISO 20022 defines this concept as:\r\n\t\"" + def + "\"");
+			p.getAccessor().getJavaDoc().setFullText(StringHelper.getFieldJavadoc((RepositoryConcept)c));
 			if (!first) {
 				constructorParams += ", ";
 				constructorBody += "\r\n";
@@ -310,8 +353,6 @@ public class ISO20022CordAppGenerator {
 			String def = "";
 			String name = "";
 			RepositoryType t = c.getMemberType();
-			def = c.getDefinition();
-			name = c.getName();
 			propertyType = t.getName();
 			if (t instanceof DataType) {
 				if (t instanceof CodeSet) {
@@ -336,9 +377,7 @@ public class ISO20022CordAppGenerator {
 				constructorBody += "this." + propertyName + " = " + propertyName + ";";
 				firstBody = false;
 				PropertySource<JavaClassSource> p = cl.addProperty(propertyType, propertyName);
-				p.getAccessor().getJavaDoc().setFullText("Prototype CordApp State Field representing the ISO 20022 " 
-						+ EMFHelper.getSimplifiedClassName(c) + " named \"" + name + "\"."
-						+ "\r\n\r\n\tISO 20022 defines this concept as:\r\n\t\"" + def + "\"");
+				p.getAccessor().getJavaDoc().setFullText(StringHelper.getFieldJavadoc((RepositoryConcept)c));
 			} else {
 				if (!firstSuperParam) {
 					superParams += ", ";
@@ -419,11 +458,7 @@ public class ISO20022CordAppGenerator {
 	private JavaEnumSource createEnumerationClass(CodeSet cs) {
 		final JavaEnumSource javaEnum = Roaster.create(JavaEnumSource.class);
 		javaEnum.setName(cs.getName()).setPackage(getPackage(cs));
-		javaEnum.getJavaDoc().setFullText("CordApp Enumeration Object representing the ISO 20022 " 
-				+ ISO20022Helper.getCodeSetType(cs) + " named \"" + cs.getName() 
-				+ "\"\r\n\r\n\tISO 20022 defines this CodeSet as:\r\n\t\"" + cs.getDefinition() + "\""
-				+ "\r\n\r\n\tThis code was generated on " + StringHelper.now() + " from the ISO 20022 e-Repository named " + model.getModeFileName() + " available from https://www.iso20022.org/e_dictionary.page"
-				+ "\r\n\r\n" + disclaimer + "\r\n\r\n");
+		javaEnum.getJavaDoc().setFullText(StringHelper.getClassJavadoc(cs, "Enumeration", model.getModeFileName()));
 		for (Code c : cs.getCode()) {
 			String code = ISO20022Helper.getCodeValue(c);
 			if (!Character.isLetter(code.charAt(0))) {
@@ -440,33 +475,14 @@ public class ISO20022CordAppGenerator {
 		return javaEnum;
 	}
 	
-	private JavaClassSource createClass(RepositoryConcept rc) {
-		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
-		String className = rc.getName();
-		if ("Contract".equals(className)) {
-			// TODO: This is a hack for the special case of "Contract" which is needed to avoid clash between
-			// net.corda.core.contracts.Contract and org.iso.tc68.iso20022._20170713_iso20022_2013_erepository.businesscomponents.Contract 
-			// There is probably a more elegant way to explicitly reference one of these classes instead of importing both, but haven't yet found it in Roaster
-			className += "_";
-		}
-		javaClass.setName(className).setPackage(getPackage(rc));
-
-		javaClass.getJavaDoc().setFullText("CordApp State Object representing the ISO 20022 " 
-				+ EMFHelper.getSimplifiedClassName(rc) + " named \"" + rc.getName() 
-				+ "\"\r\n\r\n\tISO 20022 defines this concept as:\r\n\t\"" + rc.getDefinition() + "\""
-				+ "\r\n\r\n\tThis code was generated on " + StringHelper.now() + " from the ISO 20022 e-Repository named " + model.getModeFileName() + " available from https://www.iso20022.org/e_dictionary.page"
-				+ "\r\n\r\n" + disclaimer + "\r\n\r\n");
-
-		if (rc instanceof MessageComponentType) countMessageComponents++;
-		else if (rc instanceof BusinessComponent) countBusinessComponents++;
-		else if (rc instanceof MessageDefinition) countMessages++;
-		else if (rc instanceof DataType) countDataTypes++;
-		
-		allClassesByQualifiedName.put(getQualifiedName(rc), javaClass);
-
-		return javaClass;
-	}
-
+	/**
+	 * 
+	 * @param rc An ISO 20022 Repository Concept (e.g. BusinessComponent or MessageComponent) 
+	 * that contains properties (e.g. BusinessElements or MessageElements
+	 *  
+	 * @return an ordered map of these elements that will become class parameters
+	 * 
+	 */
 	private TreeMap<String, Construct> getProperties(RepositoryConcept rc) {
 		TreeMap<String, Construct> returnValue = new TreeMap<String, Construct>();
 		
@@ -478,6 +494,14 @@ public class ISO20022CordAppGenerator {
 		return returnValue;
 	}
 	
+	/**
+	 * 
+	 * @param bc An ISO 20022 BusinessComponent
+	 * 
+	 * @return an ordered map of all BusinessElements for this BusinessComponent and all its supertypes
+	 * Note that order is important to ensure that parameters are consistent in the call to super()
+	 * 
+	 */
 	private TreeMap<String, Construct> getAllProperties(BusinessComponent bc) {
 		TreeMap<String, Construct> returnValue = getProperties(bc);
 		
