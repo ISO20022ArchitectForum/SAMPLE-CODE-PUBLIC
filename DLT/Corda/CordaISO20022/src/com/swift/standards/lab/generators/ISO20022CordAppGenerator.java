@@ -28,6 +28,7 @@ import com.swift.standards.lab.model.iso20022.util.ISO20022Helper;
 
 import iso20022.AbstractDateTimeConcept;
 import iso20022.Binary;
+import iso20022.BusinessAttribute;
 import iso20022.BusinessComponent;
 import iso20022.BusinessConcept;
 import iso20022.Code;
@@ -77,6 +78,7 @@ public class ISO20022CordAppGenerator {
 	final String outputDirectory;
 	
 	final boolean useXMLSchemaNames;
+	final boolean generateBusinessAssociations;
 	
 	/**
 	 * Because ISO 20022 Components and DataTypes are re-used, we use this HashMap to keep track of our classes as we create 
@@ -88,19 +90,19 @@ public class ISO20022CordAppGenerator {
 	int countMessages, countBusinessComponents, countMessageComponents, countDataTypes, countCodeSets, countCodes;
 
 	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer) {
-		this(importer, false, null, importer.getOutputDirectory() + "/src/");
+		this(importer, false, false, null, importer.getOutputDirectory() + "/src/");
 	}
 	
 	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, String outputDirectory) {
-		this(importer, false, null, outputDirectory);
+		this(importer, false, false, null, outputDirectory);
 	}
 	
 	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, List<String> toGenerate, String outputDirectory) {
-		this(importer, false, toGenerate, outputDirectory);
+		this(importer, false, false, toGenerate, outputDirectory);
 	}
 	
 	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames) {
-		this(importer, useXMLSchemaNames, null, importer.getOutputDirectory() + "/src/");
+		this(importer, useXMLSchemaNames, false, null, importer.getOutputDirectory() + "/src/");
 	}
 	
 	/**
@@ -117,6 +119,16 @@ public class ISO20022CordAppGenerator {
 	 *   		This may be useful if you are developing or enriching legacy software components that 
 	 *   		were developed based on the published ISO 20022 XMLSchemas (using JAXB, etc)
 	 *   
+	 * @param generateBusinessAssociations Generate fields for all BusinessAssociations with corresponding BusinessComponent classes
+	 * 		generateBusinessAssociations = false : (Default) 
+	 *   		When generating BusinessComponents, do not generate associations to other BusinessComponents
+	 *   		Generate only the data elements (BusinessAttributes) contained within this BusinessComponent
+	 *   		Useful if only want a minimal model 
+	 * 
+	 * 		generateBusinessAssociations = true : 
+	 *   		When generating BusinessComponents, generate the full set of associations to other BusinessComponents
+	 *   		Useful if want a complete model.
+	 *   
 	 * @param toGenerate Names of all MessageDefinitions and/or Business/MessageComponents that you want to generate. 
 	 *  
 	 *  Examples:
@@ -130,9 +142,10 @@ public class ISO20022CordAppGenerator {
 	 * @param outputDirectory Where to write the generated classes (Default: an src subdirectory under the e-Repository path) 
 	 * 
 	 */
-	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames, List<String> toGenerate, String outputDirectory) {
+	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames, boolean generateBusinessAssociations, List<String> toGenerate, String outputDirectory) {
 		this.model = importer;
 		this.useXMLSchemaNames = useXMLSchemaNames;
+		this.generateBusinessAssociations = generateBusinessAssociations;
 		this.toGenerate = toGenerate;
 		if (!outputDirectory.endsWith("/")) outputDirectory += "/";
 		this.outputDirectory = outputDirectory;
@@ -321,8 +334,11 @@ public class ISO20022CordAppGenerator {
 				} else {
 					cl.addImport((JavaClassSource)createDataTypeClass((DataType)t));
 				}
-			} else {
+			} else if (generateBusinessAssociations || c instanceof BusinessAttribute){
 				cl.addImport(createConceptualStaticLevelClass(t));
+			} else {
+				// Ignore BusinessAssociations
+				continue;
 			}
 			String propertyName = StringHelper.getJavaIdentifierName(c, false);
 

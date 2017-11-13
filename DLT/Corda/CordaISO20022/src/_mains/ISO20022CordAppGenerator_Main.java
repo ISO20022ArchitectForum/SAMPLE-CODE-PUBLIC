@@ -43,8 +43,18 @@ public class ISO20022CordAppGenerator_Main {
 		 *   This may be useful if you are developing or enriching legacy software components that 
 		 *   were developed based on the published ISO 20022 XMLSchemas (using JAXB, etc)
 		 * 
+		 * generateBusinessAssociations = false : (Default) 
+		 *   When generating BusinessComponents, do not generate associations to other BusinessComponents
+		 *   Generate only the data elements (BusinessAttributes) contained within this BusinessComponent
+		 *   Useful if only want a minimal model 
+		 * 
+		 * generateBusinessAssociations = true : 
+		 *   When generating BusinessComponents, generate the full set of associations to other BusinessComponents
+		 *   Useful if want a complete model.
+		 * 
 		 */
 		boolean useXMLSchemaNames = false;
+		boolean generateBusinessAssociations = false;
 		String outputDirectory = "src";
 		String iso20022RepositoryFile = "eRepository/20170713_ISO20022_2013_eRepository.iso20022";	
 
@@ -58,14 +68,15 @@ public class ISO20022CordAppGenerator_Main {
 		 *  
 		 *  toGenerate = null : (Default) Generate everything!
 		 */
-		List<String> toGenerate = null;
+//		List<String> toGenerate = null;
+		List<String> toGenerate = Arrays.asList("DateTimePeriod", "Account");
 		
 		if (args.length > 0) {
 			iso20022RepositoryFile = args[0];
 		}
 
 		ISO20022SimpleImporter importer = new ISO20022SimpleImporter(iso20022RepositoryFile);
-		ISO20022CordAppGenerator gen = new ISO20022CordAppGenerator(importer, useXMLSchemaNames, toGenerate, outputDirectory);
+		ISO20022CordAppGenerator gen = new ISO20022CordAppGenerator(importer, useXMLSchemaNames, generateBusinessAssociations, toGenerate, outputDirectory);
 		
 		long after = System.currentTimeMillis();
 		System.out.println(String.format("Generation of CordApp classes from eRepository file %s - exceptions reported to %s\r\n%s\r\nTotal generation time %d ms.", importer.getModelPath(), importer.getLogPath(), gen.getSummary(), (after - before)));
