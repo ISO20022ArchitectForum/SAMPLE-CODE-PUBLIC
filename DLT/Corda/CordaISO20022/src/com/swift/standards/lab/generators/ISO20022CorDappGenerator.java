@@ -2,6 +2,7 @@ package com.swift.standards.lab.generators;
 
 import java.math.BigDecimal;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
@@ -12,6 +13,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.jboss.forge.roaster.Roaster;
+import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.source.EnumConstantSource;
 import org.jboss.forge.roaster.model.source.FieldHolderSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -28,6 +30,7 @@ import com.swift.standards.lab.model.iso20022.util.ISO20022Helper;
 
 import iso20022.AbstractDateTimeConcept;
 import iso20022.Binary;
+import iso20022.BusinessAttribute;
 import iso20022.BusinessComponent;
 import iso20022.BusinessConcept;
 import iso20022.Code;
@@ -52,7 +55,7 @@ import net.corda.core.contracts.ContractState;
 
 /**
  * 
- * Principal worker class that does the heavy lifting to generate Java CordApp objects from the ISO 20022 e-Repository. 
+ * Principal worker class that does the heavy lifting to generate Java CorDapp objects from the ISO 20022 e-Repository. 
  * <p>
  * This sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the 
  * public ISO 20022 e-Repository, and to generate artefacts such as Java code from it.
@@ -68,9 +71,24 @@ import net.corda.core.contracts.ContractState;
  *
  */
 
-public class ISO20022CordAppGenerator {
+public class ISO20022CorDappGenerator {
 
 	final String URIBASE = "org.iso.tc68.iso20022";
+	
+	// Complex DataTypes are sometimes currently modelled as BusinessComponents. BusinessComponent 
+	// Associations are required by ISO 20022 metamodel to be bi-directionally modeled. Generating 
+	// these complex DataTypes fully results in too many unnecessary interconnections between generated 
+	// classes. This list allows us to identify these "BusinessComponent DataTypes" and items in this 
+	// list will only have their BusinessAttributes generated - BusinessAssociations will not be traversed.
+	//
+	final List<String> complexDataTypes = Arrays.asList(
+			"AmountAndPeriod", "AmountAndPrice", "AmountAndQuantity", "AmountRange", "AmountRangeBoundary", "AmountRatio", 
+			"AustralianBSBIdentification", "CashClearingSystemMember", "Country", "DateTimePeriod", "GenericIdentification", 
+			"InformationQualifier", "PercentageAndPeriod", "PrePaymentSpeed", "ProductQuantity", "QuantityRatio", "RateAndAmount",
+			"RoundingParameters", "Scheme", "SystemAvailability", "SystemClosureInformation", "SystemEventInformation", 
+			"TimeFrame", "TimePeriod", "Tolerance", "UTCOffset"
+			);
+	boolean mandatoryAttributesOnly = true;
 	
 	final ISO20022SimpleImporter model;
 	final List<String> toGenerate;
@@ -87,19 +105,19 @@ public class ISO20022CordAppGenerator {
 	String summary;
 	int countMessages, countBusinessComponents, countMessageComponents, countDataTypes, countCodeSets, countCodes;
 
-	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer) {
+	public ISO20022CorDappGenerator(ISO20022SimpleImporter importer) {
 		this(importer, false, null, importer.getOutputDirectory() + "/src/");
 	}
 	
-	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, String outputDirectory) {
+	public ISO20022CorDappGenerator(ISO20022SimpleImporter importer, String outputDirectory) {
 		this(importer, false, null, outputDirectory);
 	}
 	
-	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, List<String> toGenerate, String outputDirectory) {
+	public ISO20022CorDappGenerator(ISO20022SimpleImporter importer, List<String> toGenerate, String outputDirectory) {
 		this(importer, false, toGenerate, outputDirectory);
 	}
 	
-	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames) {
+	public ISO20022CorDappGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames) {
 		this(importer, useXMLSchemaNames, null, importer.getOutputDirectory() + "/src/");
 	}
 	
@@ -130,7 +148,7 @@ public class ISO20022CordAppGenerator {
 	 * @param outputDirectory Where to write the generated classes (Default: an src subdirectory under the e-Repository path) 
 	 * 
 	 */
-	public ISO20022CordAppGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames, List<String> toGenerate, String outputDirectory) {
+	public ISO20022CorDappGenerator(ISO20022SimpleImporter importer, boolean useXMLSchemaNames, List<String> toGenerate, String outputDirectory) {
 		this.model = importer;
 		this.useXMLSchemaNames = useXMLSchemaNames;
 		this.toGenerate = toGenerate;
@@ -150,11 +168,12 @@ public class ISO20022CordAppGenerator {
 		before = System.currentTimeMillis();
 		generateMessages(model.getAllObjectsOfType("MessageDefinition"));
 		after = System.currentTimeMillis();
-		System.out.println(String.format("Generated %d MessageDefinitions with associated %d MessageComponents, %d DataTypes, and %d Codes in %d ms", countMessages, countMessageComponents, (countDataTypes - countBCDataTypes), (countCodeSets - countBCCodeSets), (after - before)));
-//		before = System.currentTimeMillis();
-//		generateCodeSets(model.getAllObjectsOfType("CodeSet"));
-//		after = System.currentTimeMillis();
-//		System.out.println(String.format("Generated %d CodeSets with associated %d Codes in %d ms", countCodeSets, countCodes, (after - before)));
+		int countMCDataTypes = (countDataTypes - countBCDataTypes);
+		System.out.println(String.format("Generated %d MessageDefinitions with associated %d MessageComponents, %d DataTypes, and %d CodeSets in %d ms", countMessages, countMessageComponents, countMCDataTypes, (countCodeSets - countBCCodeSets), (after - before)));
+		before = System.currentTimeMillis();
+		generateCodeSets(model.getAllObjectsOfType("CodeSet"));
+		after = System.currentTimeMillis();
+		System.out.println(String.format("Generated total of %d CodeSets with associated %d Codes in %d ms", countCodeSets, countCodes, (after - before)));
 		before = System.currentTimeMillis();
 		write();
 		after = System.currentTimeMillis();
@@ -173,17 +192,15 @@ public class ISO20022CordAppGenerator {
 
 	private void generateBusinessComponents(HashMap<String, EObject> businessComponents) {
 		for (EObject bc : businessComponents.values()) {
-			if (toGenerate == null || toGenerate.contains(((RepositoryConcept)bc).getName())) {
-				if (((RepositoryConcept)bc).getRegistrationStatus() != RegistrationStatus.REGISTERED) continue;
+			if (shouldGenerate(bc)) {
 				createConceptualStaticLevelClass((RepositoryConcept)bc);
-			} 
+			}
 		}
 	}
 
 	private void generateMessages(HashMap<String, EObject> messageDefinitions) {
 		for (EObject md : messageDefinitions.values()) {
-			if (toGenerate == null || toGenerate.contains(((RepositoryConcept)md).getName())) {
-				if (((RepositoryConcept)md).getRegistrationStatus() != RegistrationStatus.REGISTERED) continue;
+			if (shouldGenerate(md)) {
 				createLogicalLevelClass((RepositoryConcept)md);
 			}
 		}
@@ -191,11 +208,18 @@ public class ISO20022CordAppGenerator {
 
 	private void generateCodeSets(HashMap<String, EObject> codeSets) {
 		for (EObject cs : codeSets.values()) {
-			if (toGenerate == null || toGenerate.contains(((RepositoryConcept)cs).getName())) {
-				if (((RepositoryConcept)cs).getRegistrationStatus() != RegistrationStatus.REGISTERED) continue;
+			if (shouldGenerate(cs)) {
 				createEnumerationClass((CodeSet)cs);
-			} 
+			}
 		}
+	}
+
+	private boolean shouldGenerate(EObject c) {
+		// If Generate All, then generate all Registered concepts, 
+		if (toGenerate == null) return ((RepositoryConcept)c).getRegistrationStatus() == RegistrationStatus.REGISTERED;
+
+		// Otherwise generate anything that is explicitly requested, regardless of registration status
+		return toGenerate.contains(((RepositoryConcept)c).getName());
 	}
 
 	private String getQualifiedName(RepositoryConcept rc) {
@@ -255,11 +279,12 @@ public class ISO20022CordAppGenerator {
 				RepositoryType t = ((Construct) c).getMemberType();
 				propertyType = t.getName();
 				if (t instanceof DataType) {
-					if (t instanceof CodeSet) {
-						cl.addImport((JavaEnumSource)createDataTypeClass((DataType)t));
-					} else {
-						cl.addImport((JavaClassSource)createDataTypeClass((DataType)t));
-					}
+					cl.addImport((JavaType<?>)createDataTypeClass((DataType)t));
+//					if (t instanceof CodeSet) {
+//						cl.addImport((JavaEnumSource)createDataTypeClass((DataType)t));
+//					} else {
+//						cl.addImport((JavaClassSource)createDataTypeClass((DataType)t));
+//					}
 				} else {
 					cl.addImport(createLogicalLevelClass(t));
 				}
@@ -292,7 +317,6 @@ public class ISO20022CordAppGenerator {
 		if (allClassesByQualifiedName.get(getQualifiedName(rc)) != null) return (JavaClassSource)allClassesByQualifiedName.get(getQualifiedName(rc));
 		
 		BusinessComponent bc = (BusinessComponent)rc;
-		
 		JavaClassSource cl = createClass(bc);	
 		if (bc.getSuperType() != null) {
 			cl.setSuperType(createConceptualStaticLevelClass(bc.getSuperType()));
@@ -315,15 +339,20 @@ public class ISO20022CordAppGenerator {
 			String propertyType = "FIXME";
 			RepositoryType t = c.getMemberType();
 			propertyType = t.getName();
+//			if ("DateTimePeriod".equals(t.getName())) {
+//				System.err.println(t.getName() + "::" +  t.getName());
+//			}
 			if (t instanceof DataType) {
-				if (t instanceof CodeSet) {
-					cl.addImport((JavaEnumSource)createDataTypeClass((DataType)t));
-				} else {
-					cl.addImport((JavaClassSource)createDataTypeClass((DataType)t));
-				}
+				cl.addImport((JavaType<?>)createDataTypeClass((DataType)t));
+//				if (t instanceof CodeSet) {
+//					cl.addImport((JavaEnumSource)createDataTypeClass((DataType)t));
+//				} else {
+//					cl.addImport((JavaClassSource)createDataTypeClass((DataType)t));
+//				}
 			} else {
 				cl.addImport(createConceptualStaticLevelClass(t));
 			}
+			
 			String propertyName = StringHelper.getJavaIdentifierName(c, false);
 
 			if (!firstParam) {
@@ -361,7 +390,10 @@ public class ISO20022CordAppGenerator {
 	private FieldHolderSource<?> createDataTypeClass(DataType dt) {
 		// TODO Finish thinking about what we're doing with DataTypes - Especially CodeSet Enumerations...
 		if (allClassesByQualifiedName.get(getQualifiedName(dt)) != null) return allClassesByQualifiedName.get(getQualifiedName(dt));
-		if (dt instanceof CodeSet) return createEnumerationClass((CodeSet)dt);
+		// ExternalCodeSets and Algorithmic CodeSets don't contain Codes, so they are modelled as restricted strings, not enumerations.
+		if ((dt instanceof CodeSet) && !(ISO20022Helper.isExternalCodeSet((CodeSet)dt) || ISO20022Helper.isAlgorithmicCodeSet((CodeSet)dt))) {
+			return createEnumerationClass((CodeSet)dt);
+		}
 		JavaClassSource cl = createClass(dt);	
 		MethodSource<JavaClassSource>  constructor = cl.addMethod().setPublic().setConstructor(true);
 
@@ -384,7 +416,7 @@ public class ISO20022CordAppGenerator {
 			}
 			constructorParams += paramType.getSimpleName() + " " + paramName;
 			if ("minInclusive".equals(c.getName()) || "maxInclusive".equals(c.getName())) {
-				// min/maxInclusive are strange exceptions that take a String, even though they are usually a number...
+				// min/maxInclusive take a String (to allow for "*", I think), even though they are usually a number...
 				constructorBody += "set" + StringHelper.firstUpper(c.getName()) + "( \"" + value.toString() + "\" );";
 			} else if ("baseValue".equals(c.getName())) {
 				// baseValue on Rates is another strange one that takes a Double...
@@ -405,12 +437,8 @@ public class ISO20022CordAppGenerator {
 			first = false;
 			// TODO - investigate whether we can add more richness here (e.g. Javadoc etc)
 		}
-		TreeMap<String, Class<?>> instanceData = getEncapsulatedData(dt);
-		for (String name : instanceData.keySet()) {
-			Class<?> propertyType = instanceData.get(name);
-			PropertySource<JavaClassSource> p = cl.addProperty(propertyType, name);
-			// TODO - investigate whether we can add more richness here (e.g. Javadoc etc)			
-		}
+		PropertySource<JavaClassSource> p = cl.addProperty(getEncapsulatedData(dt), "value");
+		// TODO - investigate whether we can add more richness here (e.g. Javadoc etc)			
 		constructor.setParameters(constructorParams);				
 		constructor.setBody(constructorBody);
 		return cl;
@@ -446,15 +474,26 @@ public class ISO20022CordAppGenerator {
 	 */
 	private TreeMap<String, Construct> getProperties(RepositoryConcept rc) {
 		TreeMap<String, Construct> returnValue = new TreeMap<String, Construct>();
-		
+		boolean businessAttributesOnly = rc instanceof BusinessComponent && complexDataTypes.contains(rc.getName());
 		for (EObject c : rc.eContents()) {
 			if (c instanceof Construct) {
-				returnValue.put(((Construct) c).getName(), (Construct) c);
+				if (mandatoryAttributesOnly && isOptional((Construct)c)) continue;
+				if (businessAttributesOnly) {
+					if (c instanceof BusinessAttribute) {
+						returnValue.put(((Construct) c).getName(), (Construct) c);
+					}
+				} else {
+					returnValue.put(((Construct) c).getName(), (Construct) c);
+				}
 			}
 		}
 		return returnValue;
 	}
 	
+	private boolean isOptional(Construct c) { 
+		return c.getMinOccurs() == 0;
+	}
+
 	/**
 	 * 
 	 * @param bc An ISO 20022 BusinessComponent
@@ -481,34 +520,30 @@ public class ISO20022CordAppGenerator {
 	 * @param dt The ISO 20022 DataType that we're generating
 	 * @return an ordered list of names and classes that tell us what Java type/s this DataType encapsulates
 	 */
-	private TreeMap<String, Class<?>> getEncapsulatedData(DataType dt) {
-		TreeMap<String, Class<?>> data = new TreeMap<String, Class<?>>();
+	private Class<?> getEncapsulatedData(DataType dt) {
 		if (dt instanceof Duration) {
-			data.put("startValue", XMLGregorianCalendar.class);
-			data.put("endValue", XMLGregorianCalendar.class);
-		} else if (dt instanceof AbstractDateTimeConcept) {
-			data.put("value", XMLGregorianCalendar.class);
+			return java.lang.String.class;
+		}
+		if (dt instanceof AbstractDateTimeConcept) {
+			return XMLGregorianCalendar.class;
 		} 
 		if (dt instanceof iso20022.Boolean) {
-			data.put("value", java.lang.Boolean.class);
+			return java.lang.Boolean.class;
 		} 
 		if (dt instanceof iso20022.String) {
-			data.put("value", java.lang.String.class);
+			return java.lang.String.class;
 		} 
 		if (dt instanceof Decimal) {
-			data.put("value", BigDecimal.class);
+			return BigDecimal.class;
 		} 
 		if (dt instanceof Binary) {
-			data.put("value", String.class);
+			return java.lang.String.class;
 		} 
 		if (dt instanceof SchemaType) {
-			data.put("value", ((SchemaType)dt).getKind().getClass());
+			return ((SchemaType)dt).getKind().getClass();
 		} 
-		if (data.isEmpty()) {
-			System.err.println("Wasn't expecting to be asked to getEncapsulatedDataType() for this DataType: " + dt);
-		}
-		
-		return data;
+		System.err.println("Wasn't expecting to be asked to getEncapsulatedDataType() for this DataType: " + dt);
+		return java.lang.Object.class;
 	}
 
 	private String getDataTypeClassification(DataType rc) {
@@ -522,7 +557,7 @@ public class ISO20022CordAppGenerator {
 		for (FieldHolderSource<?> cl : allClassesByQualifiedName.values()) {
 			FileHelper.write(outputDirectory, cl);
 		}
-		summary = "Generated the following CordApp state objects:";
+		summary = "Generated the following CorDapp state objects:";
 		summary += "\r\n" + countBusinessComponents + " BusinessComponent State Objects.";
 		summary += "\r\n" + countMessages + " MessageDefinition State Objects.";
 		summary += "\r\n" + countMessageComponents + " MessageComponentType State Objects.";

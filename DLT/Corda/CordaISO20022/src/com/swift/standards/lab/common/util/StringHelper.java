@@ -145,7 +145,7 @@ public class StringHelper {
 		return format.format(now);
 	}
 	
-	public static final String disclaimer = "<p>This sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the "
+	public static final String disclaimer = "<p><p>This sample code is provided free of charge and liability by SWIFT to demonstrate how to load and process the "
 					+ "public ISO 20022 e-Repository, and to generate artefacts such as Java code from it."
 					+ "<p>It is shared without warranty expressed or implied for the purpose of starting a conversation with the Corda "
 					+ "open source community about the best way to deploy ISO 20022’s freely-available, globally-agreed repository of "
@@ -160,7 +160,7 @@ public class StringHelper {
 		return "Prototype CordApp " + type + " Object representing the ISO 20022 " 
 				+ EMFHelper.getSimplifiedClassName(rc) + " named \"" + rc.getName() + "\""
 				+ "<p>ISO 20022 defines this concept as:\r\n\t\"" + rc.getDefinition() + "\""
-				+ "<p>This code was generated on " + StringHelper.now() + " from the ISO 20022 e-Repository named " + modelName + " available from https://www.iso20022.org/e_dictionary.page"
+				+ "<p><p>This code was generated on " + StringHelper.now() + " from the ISO 20022 e-Repository named " + modelName + " available from https://www.iso20022.org/e_dictionary.page"
 				+ disclaimer;
 	}
 

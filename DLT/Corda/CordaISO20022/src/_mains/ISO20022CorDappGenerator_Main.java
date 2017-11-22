@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.swift.standards.lab.common.iso20022.importer.ISO20022SimpleImporter;
-import com.swift.standards.lab.generators.ISO20022CordAppGenerator;
+import com.swift.standards.lab.generators.ISO20022CorDappGenerator;
 
 /**
  * 
- * Main entry class to the ISO 20022 CordApp Java source code generator. 
+ * Main entry class to the ISO 20022 CorDapp Java source code generator. 
  * <p>
  * This sample code is contributed free of charge and liability by SWIFT to demonstrate how to load and process the 
  * public ISO 20022 e-Repository, and to generate artefacts such as Java code from it.
@@ -24,7 +24,7 @@ import com.swift.standards.lab.generators.ISO20022CordAppGenerator;
  * This code must not be used in production and if shared must retain this disclaimer.
  *
  */
-public class ISO20022CordAppGenerator_Main {
+public class ISO20022CorDappGenerator_Main {
 
 	/**
 	 * @param args
@@ -53,22 +53,23 @@ public class ISO20022CordAppGenerator_Main {
 		 * 	Note that all dependent Business/MessageComponents and DataTypes will also be generated.
 		 *  
 		 *  Examples:
-		 *  List<String> toGenerate = Arrays.asList("FIToFICustomerCreditTransferV06", "FIToFICustomerCreditTransferV06");
+		 *  List<String> toGenerate = Arrays.asList("FIToFICustomerCreditTransferV05", "FIToFICustomerCreditTransferV06");
 		 *  List<String> toGenerate = Arrays.asList("DateTimePeriod", "Account");
 		 *  
 		 *  toGenerate = null : (Default) Generate everything!
 		 */
-		List<String> toGenerate = null;
+//		List<String> toGenerate = null;
+		List<String> toGenerate = Arrays.asList("FIToFICustomerCreditTransferV06");
 		
 		if (args.length > 0) {
 			iso20022RepositoryFile = args[0];
 		}
 
 		ISO20022SimpleImporter importer = new ISO20022SimpleImporter(iso20022RepositoryFile);
-		ISO20022CordAppGenerator gen = new ISO20022CordAppGenerator(importer, useXMLSchemaNames, toGenerate, outputDirectory);
+		ISO20022CorDappGenerator gen = new ISO20022CorDappGenerator(importer, useXMLSchemaNames, toGenerate, outputDirectory);
 		
 		long after = System.currentTimeMillis();
-		System.out.println(String.format("Generation of CordApp classes from eRepository file %s - exceptions reported to %s\r\n%s\r\nTotal generation time %d ms.", importer.getModelPath(), importer.getLogPath(), gen.getSummary(), (after - before)));
+		System.out.println(String.format("Generation of CorDapp classes from eRepository file %s - exceptions reported to %s\r\n%s\r\nTotal generation time %d ms.", importer.getModelPath(), importer.getLogPath(), gen.getSummary(), (after - before)));
 	}
 
 }
